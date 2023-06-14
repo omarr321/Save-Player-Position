@@ -5,6 +5,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+import spigot.savePlayerPosition.project.Main;
+import spigot.savePlayerPosition.project.sppDebugger;
 
 public class CommandSpp implements CommandExecutor {
     @Override
@@ -26,7 +29,8 @@ public class CommandSpp implements CommandExecutor {
             }
         } else if (args[0].equalsIgnoreCase("reload")) {
             if (player.hasPermission("spp.*") || player.hasPermission("spp.command.*") || player.hasPermission("spp.command.reload")) {
-                player.sendMessage(ChatColor.RED + "ERROR: NOT IMPLEMENTED!");
+                sppDebugger.log("Reloading config...");
+                JavaPlugin.getPlugin(Main.class).getConfig().getBoolean("debug");
             } else {
                 player.sendMessage(ChatColor.RED + "You do not have permission:" + ChatColor.YELLOW + " spp.command.reload");
             }
@@ -41,6 +45,6 @@ public class CommandSpp implements CommandExecutor {
         player.sendMessage(ChatColor.GREEN + "/spp help" + ChatColor.RESET + "    - Shows this page");
         player.sendMessage(ChatColor.GREEN + "/spp version" + ChatColor.RESET + " - Shows the plugin version");
         player.sendMessage(ChatColor.GREEN + "/spp reload" + ChatColor.RESET + "  - Reloads the config");
-        player.sendMessage(ChatColor.DARK_AQUA + "-----------------------" + ChatColor.RED + "Page 1 of 1" + ChatColor.DARK_AQUA + "---");
+        player.sendMessage(ChatColor.DARK_AQUA + "-----------" + ChatColor.RED + "Page 1 of 1" + ChatColor.DARK_AQUA + "---");
     }
 }

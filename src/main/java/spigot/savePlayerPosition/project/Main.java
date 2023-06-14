@@ -16,24 +16,23 @@ import java.util.List;
 public class Main extends JavaPlugin{
     @Override
     public void onEnable() {
-        this.getConfig().set("debug", true);
-        this.getConfig().set("world.groups", "");
-        this.getConfig().set("world.blacklist", "");
-        this.saveConfig();
-        Bukkit.getLogger().info(this.getName() + ": " + ChatColor.GREEN + "Enabling " + this.getName());
-        Bukkit.getLogger().info(this.getName() + ": " + "Enabling commands...");
+
+        sppDebugger.forceLog("Enabling" + this.getName(), ChatColor.GREEN);
+        this.saveDefaultConfig();
+        sppDebugger.setDebug(this.getConfig().getBoolean("debug"));
+        sppDebugger.log("Enabling commands...");
         this.getCommand("spp").setExecutor(new CommandSpp());
-        Bukkit.getLogger().info(this.getName() + ": " + "Enabling tab completion...");
+        sppDebugger.log("Enabling tab completion...");
         this.getCommand("spp").setTabCompleter(new SppTabCompletion());
-        Bukkit.getLogger().info(this.getName() + ": " + "Enabling listeners...");
+        sppDebugger.log("Enabling listeners...");
         getServer().getPluginManager().registerEvents(new leaveServerListener(), this);
         getServer().getPluginManager().registerEvents(new switchWorldListener(), this);
         getServer().getPluginManager().registerEvents(new joinServerListener(), this);
-        Bukkit.getLogger().info(this.getName() + ": " + ChatColor.GREEN + this.getName() + " has been enabled");
+        sppDebugger.forceLog(this.getName() + " has been enabled", ChatColor.GREEN);
     }
 
     @Override
     public void onDisable() {
-        Bukkit.getLogger().info(this.getName() + ": " + ChatColor.RED + "Disabled " + this.getName());
+        sppDebugger.forceLog("Disabled " + this.getName(), ChatColor.RED);
     }
 }

@@ -11,11 +11,17 @@ import java.util.List;
 public class SppTabCompletion implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+
         if(sender instanceof Player) {
             List<String> list = new ArrayList<>();
-            list.add("help");
-            list.add("version");
-            list.add("reload");
+            if (args[0].equalsIgnoreCase("help")) {
+                list.add("temp1");
+                list.add("temp2");
+            } else {
+                list.add("help");
+                list.add("version");
+                list.add("reload");
+            }
             return list;
         } else {
             return null;
