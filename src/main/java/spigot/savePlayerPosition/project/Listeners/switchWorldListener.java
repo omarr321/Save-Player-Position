@@ -11,6 +11,6 @@ public class switchWorldListener implements Listener {
 
     @EventHandler
     public void onPlayerWorldSwitch(PlayerChangedWorldEvent event) {
-        Bukkit.getLogger().info(JavaPlugin.getPlugin(Main.class).getName() + ": " + event.getPlayer().getDisplayName() + "moved from \"" + event.getFrom().getName() + "\" to \"" + event.getPlayer().getWorld().getName() + "\"");
+        Bukkit.getLogger().info(JavaPlugin.getPlugin(Main.class).getName() + ": " + event.getPlayer().getDisplayName() + " moved from \"" + event.getFrom().getName() + "\" to \"" + event.getPlayer().getWorld().getName() + "\"");
     }
 }

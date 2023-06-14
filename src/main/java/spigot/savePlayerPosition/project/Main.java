@@ -19,6 +19,7 @@ public class Main extends JavaPlugin{
         this.getConfig().set("debug", true);
         this.getConfig().set("world.groups", "");
         this.getConfig().set("world.blacklist", "");
+        this.saveConfig();
         Bukkit.getLogger().info(this.getName() + ": " + ChatColor.GREEN + "Enabling " + this.getName());
         Bukkit.getLogger().info(this.getName() + ": " + "Enabling commands...");
         this.getCommand("spp").setExecutor(new CommandSpp());
