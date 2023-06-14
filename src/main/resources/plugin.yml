@@ -1,0 +1,9 @@
+name: Save-Player-Position
+author: Omar Radwan
+main: spigot.savePlayerPosition.project.Main
+version: 0.0.1
+
+commands:
+  spp:
+    description: The current version of the plugin
+    usage: /spp <command>
