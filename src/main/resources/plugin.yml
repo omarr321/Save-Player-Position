@@ -5,5 +5,5 @@ version: 0.0.1
 
 commands:
   spp:
-    description: Root
+    description: Root command for all spp commands
     usage: /spp <command>
