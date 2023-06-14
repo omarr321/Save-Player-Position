@@ -5,5 +5,5 @@ version: 0.0.1
 
 commands:
   spp:
-    description: The current version of the plugin
+    description: Root
     usage: /spp <command>

@@ -1,4 +1,4 @@
-package spigot.savePlayerPosition.project;
+package spigot.savePlayerPosition.project.TabCompletions;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TabCompletion implements TabCompleter {
+public class SppTabCompletion implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         if(sender instanceof Player) {
