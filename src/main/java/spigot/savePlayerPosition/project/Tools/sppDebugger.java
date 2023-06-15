@@ -1,8 +1,9 @@
-package spigot.savePlayerPosition.project;
+package spigot.savePlayerPosition.project.Tools;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+import spigot.savePlayerPosition.project.Main;
 
 public class sppDebugger {
     private static boolean debug = false;

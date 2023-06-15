@@ -7,7 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import spigot.savePlayerPosition.project.Main;
-import spigot.savePlayerPosition.project.sppDebugger;
+import spigot.savePlayerPosition.project.Tools.sppDebugger;
+import spigot.savePlayerPosition.project.Tools.worldManager;
 
 public class CommandSpp implements CommandExecutor {
     private String titleLabel = ChatColor.DARK_AQUA + "[SPP]" + ": ";
@@ -66,6 +67,23 @@ public class CommandSpp implements CommandExecutor {
             } else if (args[1].equalsIgnoreCase("false")) {
                 player.sendMessage(titleLabel + ChatColor.RESET + "Setting debug to false");
                 saveConfig(false);
+            } else {
+                player.sendMessage(titleLabel + ChatColor.RED + "Error: Unknown value!");
+            }
+        } else if (args[0].equalsIgnoreCase("blacklist")) {
+            if(!(player.hasPermission("spp.*") || player.hasPermission("spp.admin.*") || player.hasPermission("spp.admin.blacklist"))) {
+                player.sendMessage(titleLabel + ChatColor.RED + "You do not have permission:" + ChatColor.YELLOW + " spp.admin.blacklist");
+                return true;
+            }
+            if (args.length != 3) {
+                player.sendMessage(titleLabel + ChatColor.RED + "Error: Incorrect args amount!");
+                return true;
+            }
+
+            if (args[1].equalsIgnoreCase("add")) {
+                worldManager.addBlacklistWorld(args[2]);
+            } else if (args[1].equalsIgnoreCase("remove")) {
+                worldManager.removeBlacklistWorld(args[2]);
             } else {
                 player.sendMessage(titleLabel + ChatColor.RED + "Error: Unknown value!");
             }
