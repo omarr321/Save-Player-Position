@@ -9,6 +9,6 @@ public class switchWorldListener implements Listener {
 
     @EventHandler
     public void onPlayerWorldSwitch(PlayerChangedWorldEvent event) {
-        sppDebugger.log(event.getPlayer().getDisplayName() + " moved from \"" + event.getFrom().getName() + "\" to \"" + event.getPlayer().getWorld().getName() + "\"");
+        sppDebugger.log(event.getPlayer().getDisplayName() + "(" + event.getPlayer().getUniqueId() + ")" + " moved from \"" + event.getFrom().getName() + "\" to \"" + event.getPlayer().getWorld().getName() + "\"");
     }
 }

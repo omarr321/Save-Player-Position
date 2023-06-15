@@ -20,33 +20,56 @@ public class CommandSpp implements CommandExecutor {
             return false;
         }
         Player player = (Player) sender;
-        if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
+        if (args.length == 0) {
+            showHelp(player);
+        } else if (args[0].equalsIgnoreCase("help")) {
+            if (args.length != 1) {
+                player.sendMessage(titleLabel + ChatColor.RED + "Error: Incorrect args amount!");
+                return true;
+            }
             showHelp(player);
         } else if (args[0].equalsIgnoreCase("version")) {
-            if (player.hasPermission("spp.*") || player.hasPermission("spp.command.*") || player.hasPermission("spp.command.version")) {
-                player.sendMessage(titleLabel + ChatColor.DARK_AQUA + "---------------------------");
-                player.sendMessage(titleLabel + ChatColor.DARK_AQUA + "Save Player Position v0.0.5");
-                player.sendMessage(titleLabel + ChatColor.DARK_AQUA + "---------------------------");
-            } else {
+            if (!(player.hasPermission("spp.*") || player.hasPermission("spp.command.*") || player.hasPermission("spp.command.version"))) {
                 player.sendMessage(titleLabel + ChatColor.RED + "You do not have permission:" + ChatColor.YELLOW + " spp.command.version");
+                return true;
             }
+            if (args.length != 1) {
+                player.sendMessage(titleLabel + ChatColor.RED + "Error: Incorrect args amount!");
+                return true;
+            }
+            player.sendMessage(titleLabel + ChatColor.DARK_AQUA + "---------------------------");
+            player.sendMessage(titleLabel + ChatColor.DARK_AQUA + "Save Player Position v0.0.5");
+            player.sendMessage(titleLabel + ChatColor.DARK_AQUA + "---------------------------");
         } else if (args[0].equalsIgnoreCase("reload")) {
-            if (player.hasPermission("spp.*") || player.hasPermission("spp.command.*") || player.hasPermission("spp.command.reload")) {
-                reloadConfig();
-            } else {
+            if (!(player.hasPermission("spp.*") || player.hasPermission("spp.command.*") || player.hasPermission("spp.command.reload"))) {
                 player.sendMessage(titleLabel + ChatColor.RED + "You do not have permission:" + ChatColor.YELLOW + " spp.command.reload");
+                return true;
             }
+            if (args.length != 1) {
+                player.sendMessage(titleLabel + ChatColor.RED + "Error: Incorrect args amount!");
+                return true;
+            }
+
+            reloadConfig();
+            player.sendMessage(titleLabel + ChatColor.RESET + "Reloaded the config");
         } else if (args[0].equalsIgnoreCase("setdebug")){
-            if(player.hasPermission("spp.*") || player.hasPermission("spp.command.*") || player.hasPermission("spp.command.setdebug")) {
-                if (args[1].equalsIgnoreCase("true")) {
-                    player.sendMessage(titleLabel + ChatColor.RESET + "Setting debug to true");
-                    saveConfig(true);
-                } else if (args[1].equalsIgnoreCase("false")) {
-                    player.sendMessage(titleLabel + ChatColor.RESET + "Setting debug to false");
-                    saveConfig(false);
-                } else {
-                    player.sendMessage(titleLabel + ChatColor.RED + "You do not have permission:" + ChatColor.YELLOW + " spp.command.setdebug");
-                }
+            if (!(player.hasPermission("spp.*") || player.hasPermission("spp.command.*") || player.hasPermission("spp.command.setdebug"))) {
+                player.sendMessage(titleLabel + ChatColor.RED + "You do not have permission:" + ChatColor.YELLOW + " spp.command.setdebug");
+                return true;
+            }
+            if (args.length != 2) {
+                player.sendMessage(titleLabel + ChatColor.RED + "Error: Incorrect args amount!");
+                return true;
+            }
+
+            if (args[1].equalsIgnoreCase("true")) {
+                player.sendMessage(titleLabel + ChatColor.RESET + "Setting debug to true");
+                saveConfig(true);
+            } else if (args[1].equalsIgnoreCase("false")) {
+                player.sendMessage(titleLabel + ChatColor.RESET + "Setting debug to false");
+                saveConfig(false);
+            } else {
+                player.sendMessage(titleLabel + ChatColor.RED + "Error: Unknown value!");
             }
         } else {
             player.sendMessage(titleLabel + ChatColor.RED + "Error: Unknown command!");

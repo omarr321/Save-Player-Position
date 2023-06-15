@@ -9,17 +9,24 @@ import spigot.savePlayerPosition.project.Listeners.leaveServerListener;
 import spigot.savePlayerPosition.project.Listeners.switchWorldListener;
 import spigot.savePlayerPosition.project.TabCompletions.SppTabCompletion;
 
-import java.util.List;
+import java.io.File;
+import java.nio.file.Path;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main extends JavaPlugin{
+    private File userData = new File(this.getDataFolder(), "playerData");
     @Override
     public void onEnable() {
 
         sppDebugger.forceLog("Enabling " + this.getName(), ChatColor.GREEN);
+        sppDebugger.log("Enabling config...");
         this.saveDefaultConfig();
         sppDebugger.setDebug(this.getConfig().getBoolean("debug"));
+        sppDebugger.log("Enabling playerData folder...");
+        if (!(userData.exists())) {
+            userData.mkdir();
+        }
         sppDebugger.log("Enabling commands...");
         this.getCommand("spp").setExecutor(new CommandSpp());
         sppDebugger.log("Enabling tab completion...");

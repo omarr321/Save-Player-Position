@@ -8,6 +8,6 @@ import spigot.savePlayerPosition.project.sppDebugger;
 public class leaveServerListener implements Listener {
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
-        sppDebugger.log(event.getPlayer().getDisplayName() + " has left the server from world " + "\"" + event.getPlayer().getWorld().getName() + "\"");
+        sppDebugger.log(event.getPlayer().getDisplayName() + "(" + event.getPlayer().getUniqueId() + ")" + " has left the server from world " + "\"" + event.getPlayer().getWorld().getName() + "\"");
     }
 }
