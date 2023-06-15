@@ -8,7 +8,7 @@ import spigot.savePlayerPosition.project.Tools.sppDebugger;
 import spigot.savePlayerPosition.project.Tools.playerDataManager;
 
 public class playerTeleportListener implements Listener {
-    @EventHandler (priority = EventPriority.LOW)
+    @EventHandler (priority = EventPriority.LOWEST)
     public void onPlayerTeleport(PlayerTeleportEvent event) {
         if (!(event.getFrom().getWorld().equals(event.getTo().getWorld()))) {
             sppDebugger.log(event.getPlayer().getDisplayName() + "(" + event.getPlayer().getUniqueId() + ")" + " moved from \"" + event.getFrom().getWorld().getName() + "\" to \"" + event.getTo().getWorld().getName() + "\"");

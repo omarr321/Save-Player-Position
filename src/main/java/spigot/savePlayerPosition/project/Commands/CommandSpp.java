@@ -81,9 +81,9 @@ public class CommandSpp implements CommandExecutor {
             }
 
             if (args[1].equalsIgnoreCase("add")) {
-                worldManager.addBlacklistWorld(args[2]);
+                worldManager.addBlacklistWorld(args[2], player);
             } else if (args[1].equalsIgnoreCase("remove")) {
-                worldManager.removeBlacklistWorld(args[2]);
+                worldManager.removeBlacklistWorld(args[2], player);
             } else {
                 player.sendMessage(titleLabel + ChatColor.RED + "Error: Unknown value!");
             }
