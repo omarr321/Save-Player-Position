@@ -14,23 +14,23 @@ public class SppTabCompletion implements TabCompleter {
 
         if(sender instanceof Player) {
             List<String> list = new ArrayList<>();
-            if (args[0].isEmpty()) {
-                list.add("help");
-                list.add("version");
-                list.add("reload");
-                list.add("setDebug");
-            } else if (args[0].equalsIgnoreCase("setDebug ")) {
-                list.add("true");
-                list.add("false");
-            } else {
-                list.add("");
+            switch(args.length) {
+                case 0:
+                case 1:
+                    list.add("help");
+                    list.add("version");
+                    list.add("reload");
+                    list.add("setdebug");
+                    return list;
+                case 2:
+                    if (args[0].equalsIgnoreCase("setdebug")) {
+                        list.add("true");
+                        list.add("false");
+                    }
+                    return list;
+                default:
+                    return list;
             }
-
-            if (!(args[1].isEmpty())) {
-                list = new ArrayList<>();
-                list.add("");
-            }
-            return list;
         } else {
             return null;
         }
