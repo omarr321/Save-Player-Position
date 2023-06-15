@@ -7,8 +7,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class sppDebugger {
     private static boolean debug = false;
 
-    public static void setDebug(boolean debug) {
-        sppDebugger.debug = debug;
+    public static void setDebug(boolean de) {
+        sppDebugger.debug = de;
     }
 
     public static void log(String log) {

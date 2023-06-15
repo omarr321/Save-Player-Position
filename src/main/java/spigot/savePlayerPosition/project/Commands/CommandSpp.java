@@ -29,10 +29,19 @@ public class CommandSpp implements CommandExecutor {
             }
         } else if (args[0].equalsIgnoreCase("reload")) {
             if (player.hasPermission("spp.*") || player.hasPermission("spp.command.*") || player.hasPermission("spp.command.reload")) {
-                sppDebugger.log("Reloading config...");
-                JavaPlugin.getPlugin(Main.class).getConfig().getBoolean("debug");
+                reloadConfig();
             } else {
                 player.sendMessage(ChatColor.RED + "You do not have permission:" + ChatColor.YELLOW + " spp.command.reload");
+            }
+        } else if (args[0].equalsIgnoreCase("setdebug")){
+            if(player.hasPermission("spp.*") || player.hasPermission("spp.command.*") || player.hasPermission("spp.command.setdebug")) {
+                if (args[1].equalsIgnoreCase("true")) {
+                    saveConfig(true);
+                } else if (args[1].equalsIgnoreCase("false")) {
+                    saveConfig(false);
+                } else {
+                    player.sendMessage(ChatColor.RED + "Error: Unknown command!");
+                }
             }
         } else {
             player.sendMessage(ChatColor.RED + "Error: Unknown command!");
@@ -40,11 +49,23 @@ public class CommandSpp implements CommandExecutor {
         return true;
     }
 
+
+    private void saveConfig(Boolean debug) {
+        JavaPlugin.getPlugin(Main.class).getConfig().set("debug", debug);
+        JavaPlugin.getPlugin(Main.class).saveConfig();
+        reloadConfig();
+    }
+    private void reloadConfig() {
+        sppDebugger.log("Reloading config...");
+        JavaPlugin.getPlugin(Main.class).reloadConfig();
+        sppDebugger.setDebug(JavaPlugin.getPlugin(Main.class).getConfig().getBoolean("debug"));
+    }
+
     private void showHelp(Player player) {
         player.sendMessage(ChatColor.DARK_AQUA + "---" + ChatColor.RED + "Save Player Position" + ChatColor.DARK_AQUA + "---");
         player.sendMessage(ChatColor.GREEN + "/spp help" + ChatColor.RESET + "    - Shows this page");
         player.sendMessage(ChatColor.GREEN + "/spp version" + ChatColor.RESET + " - Shows the plugin version");
         player.sendMessage(ChatColor.GREEN + "/spp reload" + ChatColor.RESET + "  - Reloads the config");
-        player.sendMessage(ChatColor.DARK_AQUA + "-----------" + ChatColor.RED + "Page 1 of 1" + ChatColor.DARK_AQUA + "---");
+        player.sendMessage(ChatColor.DARK_AQUA + "---" + ChatColor.RED + "Page 1 of 1" + ChatColor.DARK_AQUA + "---");
     }
 }

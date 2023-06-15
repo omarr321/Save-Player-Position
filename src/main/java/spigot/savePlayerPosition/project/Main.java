@@ -17,7 +17,7 @@ public class Main extends JavaPlugin{
     @Override
     public void onEnable() {
 
-        sppDebugger.forceLog("Enabling" + this.getName(), ChatColor.GREEN);
+        sppDebugger.forceLog("Enabling " + this.getName(), ChatColor.GREEN);
         this.saveDefaultConfig();
         sppDebugger.setDebug(this.getConfig().getBoolean("debug"));
         sppDebugger.log("Enabling commands...");
