@@ -37,7 +37,7 @@ public class CommandSpp implements CommandExecutor {
                 return true;
             }
             player.sendMessage(titleLabel + ChatColor.DARK_AQUA + "---------------------------");
-            player.sendMessage(titleLabel + ChatColor.DARK_AQUA + "Save Player Position v0.0.5");
+            player.sendMessage(titleLabel + ChatColor.DARK_AQUA + "Save Player Position v0.1.0");
             player.sendMessage(titleLabel + ChatColor.DARK_AQUA + "---------------------------");
         } else if (args[0].equalsIgnoreCase("reload")) {
             if (!(player.hasPermission("spp.*") || player.hasPermission("spp.command.*") || player.hasPermission("spp.command.reload"))) {
@@ -111,6 +111,7 @@ public class CommandSpp implements CommandExecutor {
         player.sendMessage(titleLabel + ChatColor.GREEN + "/spp version " + ChatColor.RESET + "- Shows the plugin version");
         player.sendMessage(titleLabel + ChatColor.GREEN + "/spp reload " + ChatColor.RESET + "- Reloads the config");
         player.sendMessage(titleLabel + ChatColor.GREEN + "/spp setdebug " + "<bool> " + ChatColor.RESET + "- Sets the debug value");
+        player.sendMessage(titleLabel + ChatColor.GREEN + "/spp blacklist " + "[add/remove] <world> " + ChatColor.RESET + "- Adds/removes a world from the blacklist");
         player.sendMessage(titleLabel + ChatColor.DARK_AQUA + "---" + ChatColor.RED + "Page 1 of 1" + ChatColor.DARK_AQUA + "---");
     }
 }

@@ -2,6 +2,7 @@ name: Save-Player-Position
 author: Omar Radwan
 main: spigot.savePlayerPosition.project.Main
 version: 0.1.0
+api-version: 1.19
 
 commands:
   spp:

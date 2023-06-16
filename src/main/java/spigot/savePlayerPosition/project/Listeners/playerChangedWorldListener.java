@@ -1,19 +1,18 @@
 package spigot.savePlayerPosition.project.Listeners;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import spigot.savePlayerPosition.project.Tools.sppDebugger;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import spigot.savePlayerPosition.project.Tools.playerDataManager;
+import spigot.savePlayerPosition.project.Tools.sppDebugger;
 import spigot.savePlayerPosition.project.Tools.worldManager;
 
-public class joinServerListener implements Listener {
+public class playerChangedWorldListener implements Listener {
     @EventHandler (priority = EventPriority.HIGHEST)
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        sppDebugger.log(event.getPlayer().getDisplayName() + "(" + event.getPlayer().getUniqueId() + ")" + " has joined the server in world \"" + event.getPlayer().getWorld().getName() + "\"");
+    public void onPlayerChangeWorldEvent(PlayerChangedWorldEvent event) {
+        sppDebugger.log(event.getPlayer().getDisplayName() + "(" + event.getPlayer().getUniqueId() + ")" + " has joined the world \"" + event.getPlayer().getWorld().getName() + "\"");
         double[] cords = playerDataManager.getData(event.getPlayer().getUniqueId().toString(), event.getPlayer().getWorld().getName());
         if (cords != null) {
             sppDebugger.log(event.getPlayer().getDisplayName() + " cords: " + cords[0] + ". " + cords[1] + ", " + cords[2]);

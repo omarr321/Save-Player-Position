@@ -48,9 +48,9 @@ public class playerDataManager {
                 } else {
                     input.append(line).append('\n');
                 }
-                sppDebugger.log("Writing \"" + input.toString() + "\" to temp file");
                 line = file.readLine();
             }
+            sppDebugger.log("Writing \"\n" + input.toString() + "\" to temp file");
             tempFile.append(input.toString());
             if (!(found)) {
                 sppDebugger.log("Appending world data to end of file");
