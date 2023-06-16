@@ -57,7 +57,7 @@ public class SppTabCompletion implements TabCompleter {
                     return list;
                 case 4:
                     if (args[1].equalsIgnoreCase("removeWorld")) {
-                        ArrayList<String> worlds = worldManager.getGroup(args[2]);
+                        ArrayList<String> worlds = worldManager.getWorldsInGroup(args[2]);
                         for (String world : worlds) {
                             list.add(world);
                         }

@@ -1,5 +1,7 @@
 package spigot.savePlayerPosition.project;
 
+import com.google.common.collect.Lists;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,6 +15,7 @@ import spigot.savePlayerPosition.project.Tools.playerDataManager;
 import spigot.savePlayerPosition.project.Tools.sppDebugger;
 import spigot.savePlayerPosition.project.Tools.worldManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
@@ -20,7 +23,6 @@ import java.util.List;
 public class Main extends JavaPlugin{
     @Override
     public void onEnable() {
-
         sppDebugger.forceLog("Enabling " + this.getName(), ChatColor.GREEN);
         sppDebugger.log("Enabling config...");
         worldManager.enableWorldMan();
@@ -41,7 +43,7 @@ public class Main extends JavaPlugin{
     @Override
     public void onDisable() {
         sppDebugger.forceLog("Disabling " + this.getName(), ChatColor.RED);
-        List<Player> players = (List<Player>) this.getServer().getOnlinePlayers();
+        List<Player> players = (List<Player>) Bukkit.getOnlinePlayers();
         if (players == null) {
             sppDebugger.log("No players on the server");
         } else {

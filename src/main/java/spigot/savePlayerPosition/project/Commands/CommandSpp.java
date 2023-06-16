@@ -1,5 +1,6 @@
 package spigot.savePlayerPosition.project.Commands;
 
+import com.google.common.collect.Lists;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -8,6 +9,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import spigot.savePlayerPosition.project.Main;
 import spigot.savePlayerPosition.project.Tools.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommandSpp implements CommandExecutor {
     @Override
@@ -155,6 +159,7 @@ public class CommandSpp implements CommandExecutor {
         JavaPlugin.getPlugin(Main.class).saveConfig();
         reloadConfig();
     }
+
     private void reloadConfig() {
         sppDebugger.log("Reloading config...");
         JavaPlugin.getPlugin(Main.class).reloadConfig();
