@@ -42,10 +42,10 @@ public class worldManager {
         List<String> list = (List<String>) config.getList("world.blacklist");
         ArrayList<String> worlds = null;
         if (list != null) {
-            worlds = new ArrayList<String>((Collection<? extends String>) config.getList("world.blacklist"));
+            worlds = new ArrayList<>(list);
         }
         if (worlds == null) {
-            worlds = new ArrayList<String>();
+            worlds = new ArrayList<>();
         }
         for ( String world: worlds) {
             if (world.equals(name)) {
@@ -63,10 +63,10 @@ public class worldManager {
         List<String> list = (List<String>) config.getList("world.blacklist");
         ArrayList<String> worlds = null;
         if (list != null) {
-            worlds = new ArrayList<String>((Collection<? extends String>) config.getList("world.blacklist"));
+            worlds = new ArrayList<>(list);
         }
         if (worlds == null) {
-            worlds = new ArrayList<String>();
+            worlds = new ArrayList<>();
         }
         try {
             worlds.remove(name);
@@ -77,23 +77,43 @@ public class worldManager {
             player.sendMessage(titleLabel + ChatColor.RESET + " World \"" + name + "\" is not on the blacklist");
         }
     }
+    public static void createGroup(String name, Player player) {
+        if (!(getGroup(name).isEmpty())) {
+            player.sendMessage(titleLabel + ChatColor.RESET + " Group \"" + name + "\" already exists");
+            return;
+        }
+        config.set("world.group." + name, "");
+        plugin.saveConfig();
+        player.sendMessage(titleLabel + ChatColor.RESET + " Group \"" + name + "\" has been created");
+    }
 
-    public static void createGroup(String name) {
+    public static void deleteGroup(String name, Player player) {
+        config.set("world.group." + name, null);
+        plugin.saveConfig();
+        player.sendMessage(titleLabel + ChatColor.RESET + " Group \"" + name + "\" has been deleted");
+    }
+
+    public static ArrayList<String> getGroup(String name) {
+        ArrayList<String> worlds = (ArrayList<String>) config.getList("world.group." + name);
+        if (worlds == null) {
+            worlds = new ArrayList<>();
+        }
+        return worlds;
+    }
+
+    public static ArrayList<String> getAllGroups() {
+        //ppDebugger.log(config.getConfigurationSection("world.group").getKeys(false).toString());
+        ArrayList<String> groups = new ArrayList<>(config.getConfigurationSection("world.group").getKeys(false));
+        if (groups == null) {
+            groups = new ArrayList<>();
+        }
+        return groups;
+    }
+    public static void addWorldToGroup(String groupName, String worldName, Player player) {
 
     }
 
-    public static void deleteGroup(String name) {
-
-    }
-
-    public static void getGroup(String name) {
-
-    }
-    public static void addWorldToGroup(String groupName, String worldName) {
-
-    }
-
-    public static void removeWorldFromGroup(String groupName, String worldName) {
+    public static void removeWorldFromGroup(String groupName, String worldName, Player player) {
 
     }
 }

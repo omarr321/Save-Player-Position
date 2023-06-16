@@ -71,7 +71,7 @@ public class CommandSpp implements CommandExecutor {
                 player.sendMessage(titleLabel + ChatColor.RED + "Error: Unknown value!");
             }
         } else if (args[0].equalsIgnoreCase("blacklist")) {
-            if(!(player.hasPermission("spp.*") || player.hasPermission("spp.admin.*") || player.hasPermission("spp.admin.blacklist"))) {
+            if (!(player.hasPermission("spp.*") || player.hasPermission("spp.admin.*") || player.hasPermission("spp.admin.blacklist"))) {
                 player.sendMessage(titleLabel + ChatColor.RED + "You do not have permission:" + ChatColor.YELLOW + " spp.admin.blacklist");
                 return true;
             }
@@ -86,6 +86,39 @@ public class CommandSpp implements CommandExecutor {
                 worldManager.removeBlacklistWorld(args[2], player);
             } else {
                 player.sendMessage(titleLabel + ChatColor.RED + "Error: Unknown value!");
+            }
+        } else  if (args[0].equalsIgnoreCase("group")){
+            if (!(player.hasPermission("spp.*") || player.hasPermission("spp.admin.*") || player.hasPermission("spp.admin.group.*")))
+            if (!(args.length >= 2)) {
+                player.sendMessage(titleLabel + ChatColor.RED + "Error: Incorrect args amount!");
+                return true;
+            }
+            if (args[1].equalsIgnoreCase("create") || args[1].equalsIgnoreCase("delete")) {
+                if (!(player.hasPermission("spp.*") || player.hasPermission("spp.admin.*") || player.hasPermission("spp.admin.group.*") || player.hasPermission("spp.admin.group.manage"))) {
+                    player.sendMessage(titleLabel + ChatColor.RED + "You do not have permission:" + ChatColor.YELLOW + " spp.admin.group.manage");
+                    return true;
+                }
+                if (args.length != 3) {
+                    player.sendMessage(titleLabel + ChatColor.RED + "Error: Incorrect args amount!");
+                    return true;
+                }
+
+                if (args[1].equalsIgnoreCase("create")) {
+                    worldManager.createGroup(args[2], player);
+                } else {
+                    worldManager.deleteGroup(args[2], player);
+                }
+            } else if (args[1].equalsIgnoreCase("addWorld") || args[1].equalsIgnoreCase("removeWorld")) {
+                if (!(player.hasPermission("spp.*") || player.hasPermission("spp.admin.*") || player.hasPermission("spp.admin.group.*") || player.hasPermission("spp.admin.group.manage"))) {
+                    player.sendMessage(titleLabel + ChatColor.RED + "You do not have permission:" + ChatColor.YELLOW + " spp.admin.group.manage");
+                    return true;
+                }
+                if (args.length != 4) {
+                    player.sendMessage(titleLabel + ChatColor.RED + "Error: Incorrect args amount!");
+                    return true;
+                }
+            } else {
+                player.sendMessage(titleLabel + ChatColor.RED + "Error: Unknown command!");
             }
         } else {
             player.sendMessage(titleLabel + ChatColor.RED + "Error: Unknown command!");
