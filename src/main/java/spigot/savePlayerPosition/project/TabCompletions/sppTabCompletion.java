@@ -1,18 +1,15 @@
 package spigot.savePlayerPosition.project.TabCompletions;
 
-import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import spigot.savePlayerPosition.project.Tools.worldManager;
 
-public class SppTabCompletion implements TabCompleter {
+public class sppTabCompletion implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
 
@@ -35,32 +32,34 @@ public class SppTabCompletion implements TabCompleter {
                     } else if (args[0].equalsIgnoreCase("blacklist")) {
                         list.add("add");
                         list.add("remove");
+                        list.add("list");
                     } else if (args[0].equalsIgnoreCase("group")) {
                         list.add("create");
                         list.add("delete");
                         list.add("addWorld");
                         list.add("removeWorld");
+                        list.add("list");
                     }
                     return list;
                 case 3:
-                    if (args[1].equalsIgnoreCase("add") || args[1].equalsIgnoreCase("remove")) {
-                        List<World> tempList = Bukkit.getWorlds();
-                        for (World wor : tempList ) {
-                            list.add(wor.getName());
-                        }
-                    } else if (args[1].equalsIgnoreCase("delete") || args[1].equalsIgnoreCase("removeWorld") || args[1].equalsIgnoreCase("addWorld")) {
-                        ArrayList<String> groups = worldManager.getAllGroups();
-                        for (String group : groups) {
-                            list.add(group);
-                        }
+                    switch(args[1]) {
+                        case "add":
+                            list.addAll(worldManager.getAllWorldsNotInGroupOrBlacklist());
+                            break;
+                        case "remove":
+                            list.addAll(worldManager.getBlacklist());
+                            break;
+                        case "delete":
+                        case "removeWorld":
+                        case "addWorld":
+                            list.addAll(worldManager.getAllGroups());
                     }
                     return list;
                 case 4:
                     if (args[1].equalsIgnoreCase("removeWorld")) {
-                        ArrayList<String> worlds = worldManager.getWorldsInGroup(args[2]);
-                        for (String world : worlds) {
-                            list.add(world);
-                        }
+                        list.addAll(worldManager.getWorldsInGroup(args[2]));
+                    } else if (args[1].equalsIgnoreCase("addWorld")) {
+                        list.addAll(worldManager.getAllWorldsNotInGroupOrBlacklist());
                     }
                 default:
                     return list;

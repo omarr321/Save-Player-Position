@@ -1,7 +1,9 @@
 package spigot.savePlayerPosition.project.Tools;
 
 import com.google.common.collect.Lists;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,37 +19,31 @@ public class worldManager {
     private static FileConfiguration config = plugin.getConfig();
     public static void enableWorldMan() {
         plugin.saveDefaultConfig();
-        //setDefaultConfig();
         sppDebugger.setDebug(config.getBoolean("debug"));
     }
 
-    private static void setDefaultConfig() {
-        JavaPlugin.getPlugin(Main.class).getConfig().set("debug", "false");
-        JavaPlugin.getPlugin(Main.class).getConfig().setComments("debug", Lists.newArrayList("Setting this to true will output debug messages to the console"));
-        JavaPlugin.getPlugin(Main.class).getConfig().set("world.blacklist", new ArrayList<String>());
-        JavaPlugin.getPlugin(Main.class).getConfig().setComments("world.blacklist", Lists.newArrayList("List of worlds that the plugin will ignore"));
-        JavaPlugin.getPlugin(Main.class).getConfig().set("world.group.dummy", new ArrayList<String>());
-        JavaPlugin.getPlugin(Main.class).getConfig().setComments("world.group", Lists.newArrayList("Groups of worlds that the plugin will use to know where to teleport you"));
-        JavaPlugin.getPlugin(Main.class).saveConfig();
+    public static boolean checkBlacklist(String name) {
+        ArrayList<String> worlds = getBlacklist();
+
+        for (String world : worlds) {
+            if (world.equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public static boolean checkBlacklist(String name) {
+    public static ArrayList<String> getBlacklist() {
         List<String> list = (List<String>) config.getList("world.blacklist");
         ArrayList<String> worlds = null;
         if (list != null) {
             worlds = new ArrayList<String>((Collection<? extends String>) config.getList("world.blacklist"));
         }
         if (worlds == null) {
-            return false;
+            worlds = new ArrayList<>();
         }
 
-        for (String world : worlds) {
-         if (world.equals(name)) {
-             return true;
-         }
-        }
-
-        return false;
+        return worlds;
     }
 
     public static void addBlacklistWorld(String name, Player player) {
@@ -201,5 +197,28 @@ public class worldManager {
         plugin.saveConfig();
         sppDebugger.log("World \"" + worldName + "\" was removed from group \"" + groupName + "\"");
         sppMessager.sendMessage(player, "World \"" + worldName + "\" was removed from group \"" + groupName + "\"");
+    }
+
+    public static ArrayList<String> getWorldsInAllGroups() {
+        ArrayList<String> worlds = new ArrayList<>();
+        ArrayList<String> groups = worldManager.getAllGroups();
+        for(String group : groups) {
+            worlds.addAll(worldManager.getWorldsInGroup(group));
+        }
+        return worlds;
+    }
+
+    public static ArrayList<String> getAllWorldsNotInGroupOrBlacklist() {
+        ArrayList<String> groupWorlds = getWorldsInAllGroups();
+        ArrayList<String> blacklistedWorlds = worldManager.getBlacklist();
+        ArrayList<String> temp = new ArrayList<>();
+        List<World> allWorld = Bukkit.getWorlds();
+
+        for(World world : allWorld) {
+            if (!(groupWorlds.contains(world.getName()) || blacklistedWorlds.contains(world.getName()))) {
+                temp.add(world.getName());
+            }
+        }
+        return temp;
     }
 }

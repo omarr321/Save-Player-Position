@@ -14,7 +14,7 @@ public class joinServerListener implements Listener {
     @EventHandler (priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         sppDebugger.log(event.getPlayer().getDisplayName() + "(" + event.getPlayer().getUniqueId() + ")" + " has joined the server in world \"" + event.getPlayer().getWorld().getName() + "\"");
-        double[] cords = playerDataManager.getData(event.getPlayer().getUniqueId().toString(), event.getPlayer().getWorld().getName());
+        double[] cords = playerDataManager.getWorldData(event.getPlayer().getUniqueId().toString(), event.getPlayer().getWorld().getName());
         if (cords != null) {
             sppDebugger.log(event.getPlayer().getDisplayName() + " cords: " + cords[0] + ". " + cords[1] + ", " + cords[2]);
             if (worldManager.checkBlacklist(event.getPlayer().getWorld().getName())) {

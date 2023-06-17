@@ -1,6 +1,5 @@
 package spigot.savePlayerPosition.project;
 
-import com.google.common.collect.Lists;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -10,12 +9,11 @@ import spigot.savePlayerPosition.project.Listeners.joinServerListener;
 import spigot.savePlayerPosition.project.Listeners.leaveServerListener;
 import spigot.savePlayerPosition.project.Listeners.playerChangedWorldListener;
 import spigot.savePlayerPosition.project.Listeners.playerTeleportListener;
-import spigot.savePlayerPosition.project.TabCompletions.SppTabCompletion;
+import spigot.savePlayerPosition.project.TabCompletions.sppTabCompletion;
 import spigot.savePlayerPosition.project.Tools.playerDataManager;
 import spigot.savePlayerPosition.project.Tools.sppDebugger;
 import spigot.savePlayerPosition.project.Tools.worldManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
@@ -31,7 +29,7 @@ public class Main extends JavaPlugin{
         sppDebugger.log("Enabling commands...");
         this.getCommand("spp").setExecutor(new CommandSpp());
         sppDebugger.log("Enabling tab completion...");
-        this.getCommand("spp").setTabCompleter(new SppTabCompletion());
+        this.getCommand("spp").setTabCompleter(new sppTabCompletion());
         sppDebugger.log("Enabling listeners...");
         this.getServer().getPluginManager().registerEvents(new leaveServerListener(), this);
         this.getServer().getPluginManager().registerEvents(new playerTeleportListener(), this);
@@ -49,7 +47,7 @@ public class Main extends JavaPlugin{
         } else {
             for (Player player: players) {
                 sppDebugger.log("Saving location data for \"" + player.getName() + "\"");
-                playerDataManager.saveData(player.getUniqueId().toString(), player.getLocation().getWorld().getName(), player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
+                playerDataManager.saveWorldData(player.getUniqueId().toString(), player.getLocation().getWorld().getName(), player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
             }
         }
         sppDebugger.forceLog(this.getName() + " has been disabled", ChatColor.RED);

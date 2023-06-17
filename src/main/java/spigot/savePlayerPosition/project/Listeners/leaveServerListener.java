@@ -14,6 +14,6 @@ public class leaveServerListener implements Listener {
         sppDebugger.log(event.getPlayer().getDisplayName() + "(" + event.getPlayer().getUniqueId() + ")" + " has left the server from world " + "\"" + event.getPlayer().getWorld().getName() + "\"");
         Location tempLoc = event.getPlayer().getLocation();
         sppDebugger.log(event.getPlayer().getDisplayName() + " cords: " + tempLoc.getX() + ", " + tempLoc.getY() + ", " + tempLoc.getZ());
-        playerDataManager.saveData(event.getPlayer().getUniqueId().toString(), event.getPlayer().getWorld().getName(), tempLoc.getX(), tempLoc.getY(), tempLoc.getZ());
+        playerDataManager.saveWorldData(event.getPlayer().getUniqueId().toString(), event.getPlayer().getWorld().getName(), tempLoc.getX(), tempLoc.getY(), tempLoc.getZ());
     }
 }

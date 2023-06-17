@@ -1,6 +1,5 @@
 package spigot.savePlayerPosition.project.Commands;
 
-import com.google.common.collect.Lists;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,9 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import spigot.savePlayerPosition.project.Main;
 import spigot.savePlayerPosition.project.Tools.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CommandSpp implements CommandExecutor {
     @Override
@@ -86,19 +82,43 @@ public class CommandSpp implements CommandExecutor {
                     sppMessager.sendMessage(player, "You do not have permission: ", ChatColor.RED, "spp.admin.blacklist", ChatColor.YELLOW);
                     return true;
                 }
-                if (args.length != 3) {
-                    sppMessager.sendMessage(player, "Error: Incorrect args amount!", ChatColor.RED);
-                    return true;
-                }
-                switch (args[1]) {
-                    case "add":
-                        worldManager.addBlacklistWorld(args[2], player);
-                        break;
-                    case "remove":
-                        worldManager.removeBlacklistWorld(args[2], player);
-                        break;
-                    default:
-                        sppMessager.sendMessage(player, "Error: Unknown value!", ChatColor.RED);
+                if (args.length == 2) {
+                    switch (args[1]) {
+                        case "list":
+                            sppMessager.sendMessage(player, ChatColor.DARK_AQUA + "---" + ChatColor.RED + "Black List" + ChatColor.DARK_AQUA + "---");
+                            if (worldManager.getBlacklist().toString().length() == 2) {
+                                sppMessager.sendMessage(player, "NONE", ChatColor.YELLOW);
+                            } else {
+                                for(String world : worldManager.getBlacklist()) {
+                                    sppMessager.sendMessage(player, "- ", ChatColor.RESET, world, ChatColor.GREEN);
+                                }
+                            }
+                            sppMessager.sendMessage(player, ChatColor.DARK_AQUA + "---" + ChatColor.RED + "Black List" + ChatColor.DARK_AQUA + "---");
+                            break;
+                        default:
+                            sppMessager.sendMessage(player, "Error: Unknown command!", ChatColor.RED);
+                    }
+                } else {
+                    if (args.length != 3) {
+                        sppMessager.sendMessage(player, "Error: Incorrect args amount!", ChatColor.RED);
+                        return true;
+                    }
+                    switch (args[1]) {
+                        case "add":
+                            for(String world : worldManager.getWorldsInAllGroups()) {
+                                if (world.equals(args[2])) {
+                                    sppMessager.sendMessage(player, "That world is in a group and can not be added to the blacklist");
+                                    return true;
+                                }
+                            }
+                            worldManager.addBlacklistWorld(args[2], player);
+                            break;
+                        case "remove":
+                            worldManager.removeBlacklistWorld(args[2], player);
+                            break;
+                        default:
+                            sppMessager.sendMessage(player, "Error: Unknown value!", ChatColor.RED);
+                    }
                 }
                 break;
             case "group":
@@ -137,11 +157,47 @@ public class CommandSpp implements CommandExecutor {
                         }
                         switch (args[1]) {
                             case "addWorld":
+                                for(String world : worldManager.getBlacklist()) {
+                                    if (world.equals(args[3])) {
+                                        sppMessager.sendMessage(player, "That world is in the blacklist and can not be added to a group");
+                                        return true;
+                                    }
+                                }
+                                for(String world : worldManager.getWorldsInAllGroups()) {
+                                    if (world.equals(args[3])) {
+                                        sppMessager.sendMessage(player, "That world is in a group and can not be added");
+                                        return true;
+                                    }
+                                }
                                 worldManager.addWorldToGroup(args[2], args[3], player);
                                 break;
                             case "removeWorld":
                                 worldManager.removeWorldFromGroup(args[2], args[3], player);
                         }
+                        break;
+                    case "list":
+                        if (!(player.hasPermission("spp.*") || player.hasPermission("spp.admin.*") || player.hasPermission("spp.admin.group.*") || player.hasPermission("spp.admin.group.groups"))) {
+                            sppMessager.sendMessage(player, "You do not have permission: ", ChatColor.RED, "spp.admin.group.groups", ChatColor.YELLOW);
+                            return true;
+                        }
+                        sppMessager.sendMessage(player, ChatColor.DARK_AQUA + "---" + ChatColor.RED + "Groups" + ChatColor.DARK_AQUA + "---");
+                        if (worldManager.getAllGroups().toString().length() == 2) {
+                            sppMessager.sendMessage(player, "NONE", ChatColor.YELLOW);
+                        } else {
+                            for(String group : worldManager.getAllGroups()) {
+                                sppMessager.sendMessage(player, "- ", ChatColor.RESET, group, ChatColor.GREEN);
+                                StringBuilder temp = new StringBuilder();
+                                for(String world : worldManager.getWorldsInGroup(group)) {
+                                    temp.append(world + ", ");
+                                }
+                                if (temp.length() == 0) {
+                                    sppMessager.sendMessage(player, "NONE", ChatColor.YELLOW);
+                                } else {
+                                    sppMessager.sendMessage(player, temp.substring(0, temp.length()-2).toString(), ChatColor.YELLOW);
+                                }
+                            }
+                        }
+                        sppMessager.sendMessage(player, ChatColor.DARK_AQUA + "---" + ChatColor.RED + "Groups" + ChatColor.DARK_AQUA + "---");
                         break;
                     default:
                         sppMessager.sendMessage(player, "Error: Unknown command!", ChatColor.RED);
@@ -173,8 +229,10 @@ public class CommandSpp implements CommandExecutor {
         sppMessager.sendMessage(player, "/spp reload ", ChatColor.GREEN, "- Reloads the config", ChatColor.RESET);
         sppMessager.sendMessage(player, "/spp setdebug <bool> ", ChatColor.GREEN, "- Sets the debug value", ChatColor.RESET);
         sppMessager.sendMessage(player, "/spp blacklist [add/remove] <world> ", ChatColor.GREEN, "- Adds/Removes a world from the blacklist", ChatColor.RESET);
-        sppMessager.sendMessage(player, "/spp group [create/delete] <group>" , ChatColor.GREEN, "- Creates/Deletes groups from the config", ChatColor.RESET);
-        sppMessager.sendMessage(player, ".spp group [addWorld/removeWorld] <group> <world> ", ChatColor.GREEN, "- Adds/Removes worlds from a group", ChatColor.RESET);
+        sppMessager.sendMessage(player, "/spp blacklist list ", ChatColor.GREEN, "- Lists all the blacklisted world", ChatColor.RESET);
+        sppMessager.sendMessage(player, "/spp group [create/delete] <group> " , ChatColor.GREEN, "- Creates/Deletes groups from the config", ChatColor.RESET);
+        sppMessager.sendMessage(player, "/spp group [addWorld/removeWorld] <group> <world> ", ChatColor.GREEN, "- Adds/Removes worlds from a group", ChatColor.RESET);
+        sppMessager.sendMessage(player, "/spp group list ", ChatColor.GREEN, "- Lists all the groups and what worlds are in them", ChatColor.RESET);
         sppMessager.sendMessage(player, ChatColor.DARK_AQUA + "---" + ChatColor.RED + "Page 1 of 1" + ChatColor.DARK_AQUA + "---");
     }
 }

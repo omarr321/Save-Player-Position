@@ -13,7 +13,7 @@ public class playerTeleportListener implements Listener {
         if (!(event.getFrom().getWorld().equals(event.getTo().getWorld()))) {
             sppDebugger.log(event.getPlayer().getDisplayName() + "(" + event.getPlayer().getUniqueId() + ")" + " moved from \"" + event.getFrom().getWorld().getName() + "\" to \"" + event.getTo().getWorld().getName() + "\"");
             sppDebugger.log("Saving " + event.getPlayer().getName() + " position of " + event.getFrom().getX() + ", " + event.getFrom().getY() + ", " + event.getFrom().getZ() + " from world \"" + event.getFrom().getWorld().getName() + "\"");
-            playerDataManager.saveData(event.getPlayer().getUniqueId().toString(), event.getFrom().getWorld().getName(), event.getFrom().getX(), event.getFrom().getY(), event.getFrom().getZ());
+            playerDataManager.saveWorldData(event.getPlayer().getUniqueId().toString(), event.getFrom().getWorld().getName(), event.getFrom().getX(), event.getFrom().getY(), event.getFrom().getZ());
         }
     }
 }

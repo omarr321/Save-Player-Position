@@ -8,13 +8,17 @@ import java.io.*;
 
 public class playerDataManager {
     private static File userData = new File(JavaPlugin.getPlugin(Main.class).getDataFolder(), "playerData");
+    private static File userWorldData = new File(userData, "worldData");
+    private static File userGroupData = new File(userData, "groupData");
 
     public static void enablePlayerMan() {
         userData.mkdir();
+        userWorldData.mkdir();
+        userGroupData.mkdir();
     }
 
-    private static boolean checkPlayerFile(String uuid) {
-        File tempUser = new File(userData, uuid + ".dat");
+    private static boolean checkPlayerWorldFile(String uuid) {
+        File tempUser = new File(userWorldData, uuid + ".dat");
         if (!(tempUser.exists())) {
             try {
                 return tempUser.createNewFile();
@@ -26,15 +30,15 @@ public class playerDataManager {
         return true;
     }
 
-    public static void saveData(String uuid, String key, double xValue, double yValue, double zValue) {
-        checkPlayerFile(uuid);
+    public static void saveWorldData(String uuid, String key, double xValue, double yValue, double zValue) {
+        checkPlayerWorldFile(uuid);
 
         try {
             sppDebugger.log("Checking file for world data of \"" + key + "\"...");
-            BufferedReader file = new BufferedReader(new FileReader(new File(userData, uuid + ".dat")));
+            BufferedReader file = new BufferedReader(new FileReader(new File(userWorldData, uuid + ".dat")));
             String line = file.readLine();
             StringBuilder input = new StringBuilder();
-            File tempUser = new File(userData, uuid + ".dat.tmp");
+            File tempUser = new File(userWorldData, uuid + ".dat.tmp");
             tempUser.createNewFile();
             BufferedWriter tempFile = new BufferedWriter(new FileWriter(tempUser));
             boolean found = false;
@@ -59,8 +63,8 @@ public class playerDataManager {
 
             file.close();
             tempFile.close();
-            new File(userData, uuid + ".dat").delete();
-            new File(userData, uuid + ".dat.tmp").renameTo(new File(userData, uuid + ".dat"));
+            new File(userWorldData, uuid + ".dat").delete();
+            new File(userWorldData, uuid + ".dat.tmp").renameTo(new File(userWorldData, uuid + ".dat"));
         } catch (FileNotFoundException e) {
             sppDebugger.forceLog("Error: Issue finding player file!", ChatColor.RED);
             throw new RuntimeException(e);
@@ -70,11 +74,11 @@ public class playerDataManager {
         }
     }
 
-    public static double[] getData(String uuid, String key) {
-        checkPlayerFile(uuid);
+    public static double[] getWorldData(String uuid, String key) {
+        checkPlayerWorldFile(uuid);
         try {
             sppDebugger.log("Checking file for world data of \"" + key + "\"...");
-            BufferedReader file = new BufferedReader(new FileReader(new File(userData, uuid + ".dat")));
+            BufferedReader file = new BufferedReader(new FileReader(new File(userWorldData, uuid + ".dat")));
             String line = file.readLine();
             while (line != null) {
                 String currWorld = line.split(":")[0];
