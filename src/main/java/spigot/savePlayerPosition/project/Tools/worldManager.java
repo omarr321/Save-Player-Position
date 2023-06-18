@@ -221,4 +221,15 @@ public class worldManager {
         }
         return temp;
     }
+
+    public static String getGroupWorldIsPartOf(String worldName) {
+        for(String group : getAllGroups()) {
+            for (String world : getWorldsInGroup(group)) {
+                if (world.equals(worldName)) {
+                    return group;
+                }
+            }
+        }
+        return null;
+    }
 }

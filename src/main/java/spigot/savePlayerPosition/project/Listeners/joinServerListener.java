@@ -20,8 +20,21 @@ public class joinServerListener implements Listener {
             if (worldManager.checkBlacklist(event.getPlayer().getWorld().getName())) {
                 sppDebugger.log("World \"" + event.getPlayer().getWorld().getName() + "\" is blacklisted, skipping");
             } else {
-                Location loc = new Location(event.getPlayer().getWorld(), cords[0], cords[1], cords[2]);
-                event.getPlayer().teleport(loc);
+                String group = worldManager.getGroupWorldIsPartOf(event.getPlayer().getWorld().getName());
+                if (group == null) {
+                    Location loc = new Location(event.getPlayer().getWorld(), cords[0], cords[1], cords[2]);
+                    event.getPlayer().teleport(loc);
+                } else {
+                    if (playerDataManager.getGroupData(event.getPlayer().getUniqueId().toString(), group).equals(event.getPlayer().getWorld().getName())) {
+                        Location loc = new Location(event.getPlayer().getWorld(), cords[0], cords[1], cords[2]);
+                        event.getPlayer().teleport(loc);
+                    } else {
+                        String world = playerDataManager.getGroupData(event.getPlayer().getUniqueId().toString(), group);
+                        cords = playerDataManager.getWorldData(event.getPlayer().getUniqueId().toString(), world);
+                        Location loc = new Location(Bukkit.getWorld(world), cords[0],cords[1], cords[2]);
+                        event.getPlayer().teleport(loc);
+                    }
+                }
             }
         } else {
             sppDebugger.log(event.getPlayer().getDisplayName() + " cords: NO CORDS SAVED");

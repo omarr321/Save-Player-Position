@@ -102,4 +102,87 @@ public class playerDataManager {
         }
         return null;
     }
+
+    private static boolean checkPlayerGroupFile(String uuid) {
+        File tempUser = new File(userGroupData, uuid + ".dat");
+        if (!(tempUser.exists())) {
+            try {
+                return tempUser.createNewFile();
+            } catch (IOException e) {
+                sppDebugger.forceLog("Error: Issue creating new player file!", ChatColor.RED);
+                throw new RuntimeException(e);
+            }
+        }
+        return true;
+    }
+
+    public static String getGroupData(String uuid, String key) {
+        checkPlayerGroupFile(uuid);
+        try {
+            sppDebugger.log("Checking file for group data of \"" + key + "\"...");
+            BufferedReader file = new BufferedReader(new FileReader(new File(userGroupData, uuid + ".dat")));
+            String line = file.readLine();
+            while (line != null) {
+                String currWorld = line.split(":")[0];
+                sppDebugger.log("Checking key against \"" + currWorld + "\"");
+                if (currWorld.equals(key)) {
+                    String value = line.split(":")[1];
+                    file.close();
+                    return value;
+                }
+                line = file.readLine();
+            }
+            file.close();
+        } catch (FileNotFoundException e) {
+            sppDebugger.forceLog("Error: Issue finding player file!", ChatColor.RED);
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            sppDebugger.forceLog("Error: Issue loading player file!", ChatColor.RED);
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    public static void saveGroupData(String uuid, String key, String value) {
+        checkPlayerGroupFile(uuid);
+        try {
+            sppDebugger.log("Checking file for group data of \"" + key + "\"...");
+            BufferedReader file = new BufferedReader(new FileReader(new File(userGroupData, uuid + ".dat")));
+            String line = file.readLine();
+            StringBuilder input = new StringBuilder();
+            File tempUser = new File(userGroupData, uuid + ".dat.tmp");
+            tempUser.createNewFile();
+            BufferedWriter tempFile = new BufferedWriter(new FileWriter(tempUser));
+            boolean found = false;
+
+            while (line != null) {
+                String currWorld = line.split(":")[0];
+                if (currWorld.equals(key)) {
+                    sppDebugger.log("Found data for group \"" + key + "\"");
+                    input.append(key + ":" + value).append('\n');
+                    found = true;
+                } else {
+                    input.append(line).append('\n');
+                }
+                line = file.readLine();
+            }
+            sppDebugger.log("Writing \"\n" + input.toString() + "\" to temp file");
+            tempFile.append(input.toString());
+            if (!(found)) {
+                sppDebugger.log("Appending group data to end of file");
+                tempFile.append(key + ":" + value + '\n');
+            }
+
+            file.close();
+            tempFile.close();
+            new File(userGroupData, uuid + ".dat").delete();
+            new File(userGroupData, uuid + ".dat.tmp").renameTo(new File(userGroupData, uuid + ".dat"));
+        } catch (FileNotFoundException e) {
+            sppDebugger.forceLog("Error: Issue finding player file!", ChatColor.RED);
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            sppDebugger.forceLog("Error: Issue loading player file!", ChatColor.RED);
+            throw new RuntimeException(e);
+        }
+    }
 }
