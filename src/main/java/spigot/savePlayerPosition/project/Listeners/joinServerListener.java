@@ -27,7 +27,7 @@ public class joinServerListener implements Listener {
                     Location loc = new Location(event.getPlayer().getWorld(), cords[0], cords[1], cords[2]);
                     event.getPlayer().teleport(loc);
                 } else {
-                    if (playerDataManager.getGroupData(event.getPlayer().getUniqueId().toString(), group).equals(event.getPlayer().getWorld().getName())) {
+                    if (playerDataManager.getGroupData(event.getPlayer().getUniqueId().toString(), group) != null && playerDataManager.getGroupData(event.getPlayer().getUniqueId().toString(), group).equals(event.getPlayer().getWorld().getName())) {
                         Location loc = new Location(event.getPlayer().getWorld(), cords[0], cords[1], cords[2]);
                         event.getPlayer().teleport(loc);
                     } else {
