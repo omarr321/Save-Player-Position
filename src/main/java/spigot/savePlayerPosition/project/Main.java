@@ -19,37 +19,40 @@ import java.util.List;
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main extends JavaPlugin{
+    private static final String strClass = "Main";
     @Override
     public void onEnable() {
-        sppDebugger.forceLog("Enabling " + this.getName(), ChatColor.GREEN);
-        sppDebugger.log("Enabling config...");
+        String strMethod = "onEnable";
+        sppDebugger.forceLog(strClass, strMethod, "Enabling " + this.getName(), ChatColor.GREEN);
+        sppDebugger.log(strClass, strMethod, "Enabling config...");
         worldManager.enableWorldMan();
-        sppDebugger.log("Enabling playerData folder...");
+        sppDebugger.log(strClass, strMethod, "Enabling playerData folder...");
         playerDataManager.enablePlayerMan();
-        sppDebugger.log("Enabling commands...");
+        sppDebugger.log(strClass, strMethod, "Enabling commands...");
         this.getCommand("spp").setExecutor(new CommandSpp());
-        sppDebugger.log("Enabling tab completion...");
+        sppDebugger.log(strClass, strMethod, "Enabling tab completion...");
         this.getCommand("spp").setTabCompleter(new sppTabCompletion());
-        sppDebugger.log("Enabling listeners...");
+        sppDebugger.log(strClass, strMethod, "Enabling listeners...");
         this.getServer().getPluginManager().registerEvents(new leaveServerListener(), this);
         this.getServer().getPluginManager().registerEvents(new playerTeleportListener(), this);
         this.getServer().getPluginManager().registerEvents(new joinServerListener(), this);
         this.getServer().getPluginManager().registerEvents(new playerChangedWorldListener(), this);
-        sppDebugger.forceLog(this.getName() + " has been enabled", ChatColor.GREEN);
+        sppDebugger.forceLog(strClass, strMethod, this.getName() + " has been enabled", ChatColor.GREEN);
     }
 
     @Override
     public void onDisable() {
-        sppDebugger.forceLog("Disabling " + this.getName(), ChatColor.RED);
+        String strMethod = "onDisable";
+        sppDebugger.forceLog(strClass, strMethod, "Disabling " + this.getName(), ChatColor.RED);
         List<Player> players = (List<Player>) Bukkit.getOnlinePlayers();
         if (players == null) {
-            sppDebugger.log("No players on the server");
+            sppDebugger.log(strClass, strMethod, "No players on the server");
         } else {
             for (Player player: players) {
-                sppDebugger.log("Saving location data for \"" + player.getName() + "\"");
+                sppDebugger.log(strClass, strMethod, "Saving location data for \"" + player.getName() + "\"");
                 playerDataManager.saveWorldData(player.getUniqueId().toString(), player.getLocation().getWorld().getName(), player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
             }
         }
-        sppDebugger.forceLog(this.getName() + " has been disabled", ChatColor.RED);
+        sppDebugger.forceLog(strClass, strMethod, this.getName() + " has been disabled", ChatColor.RED);
     }
 }

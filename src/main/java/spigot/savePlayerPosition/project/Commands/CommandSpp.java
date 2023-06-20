@@ -10,6 +10,7 @@ import spigot.savePlayerPosition.project.Main;
 import spigot.savePlayerPosition.project.Tools.*;
 
 public class CommandSpp implements CommandExecutor {
+    private static final String strClass = "CommandSpp";
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
@@ -217,7 +218,8 @@ public class CommandSpp implements CommandExecutor {
     }
 
     private void reloadConfig() {
-        sppDebugger.log("Reloading config...");
+        String strMethod = "reloadConfig";
+        sppDebugger.log(strClass, strMethod, "Reloading config...");
         JavaPlugin.getPlugin(Main.class).reloadConfig();
         sppDebugger.setDebug(JavaPlugin.getPlugin(Main.class).getConfig().getBoolean("debug"));
     }

@@ -7,28 +7,32 @@ import spigot.savePlayerPosition.project.Main;
 
 public class sppDebugger {
     private static boolean debug = false;
-    private static String title = "[" + JavaPlugin.getPlugin(Main.class).getName() + "]: ";
+    private static String title = "[" + JavaPlugin.getPlugin(Main.class).getName() + "]";
     public static void setDebug(boolean de) {
         sppDebugger.debug = de;
     }
 
-    public static void log(String log) {
+    public static void log(String strClass, String strMethod, String log) {
         if (debug) {
-            Bukkit.getLogger().info(title + log);
+            Bukkit.getLogger().info(buildFullTitle(strClass, strMethod) + log);
         }
     }
 
-    public static void log(String log, ChatColor color) {
+    public static void log(String strClass, String strMethod, String log, ChatColor color) {
         if (debug) {
-            Bukkit.getLogger().info(title + color + log);
+            Bukkit.getLogger().info(buildFullTitle(strClass, strMethod) + color + log);
         }
     }
 
-    public static void forceLog(String log) {
-        Bukkit.getLogger().info(title + log);
+    public static void forceLog(String strClass, String strMethod, String log) {
+        Bukkit.getLogger().info(buildFullTitle(strClass, strMethod) + log);
     }
 
-    public static void forceLog(String log, ChatColor color) {
-        Bukkit.getLogger().info(title + color + log);
+    public static void forceLog(String strClass, String strMethod, String log, ChatColor color) {
+        Bukkit.getLogger().info(buildFullTitle(strClass, strMethod) + color + log);
+    }
+
+    private static String buildFullTitle(String strClass, String strMethod) {
+        return title + "-(" + strClass + "." + strMethod + "): ";
     }
 }
