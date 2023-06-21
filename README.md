@@ -21,7 +21,7 @@ There is a permission system so you can give the player certain commands.
 | /spp reload | Reloads the config | spp.command.reload |
 | /spp setdebug \<bool\> | Sets the debug value | spp.command.setdebug |
 | /spp blacklist [add/remove] \<world\> | Adds/Removes a world from the blacklist | spp.admin.blacklist |
-| /spp blacklist list | Lista all the blacklisted worlds | spp.admin.blacklist |
+| /spp blacklist list | List all the blacklisted worlds | spp.admin.blacklist |
 | /spp group [create/delete] \<group\> | Creates/Deletes groups | spp.admin.group.groups |
 | /spp group [addWorld/removeWorld] \<group\> \<world\> | Adds/Removes a world from a group | spp.admin.group.worlds |
 | /spp group list | Lists all the groups and what worlds are in them | spp.admin.group.groups |
