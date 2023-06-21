@@ -13,11 +13,11 @@ import spigot.savePlayerPosition.project.TabCompletions.sppTabCompletion;
 import spigot.savePlayerPosition.project.Tools.playerDataManager;
 import spigot.savePlayerPosition.project.Tools.sppDebugger;
 import spigot.savePlayerPosition.project.Tools.worldManager;
-
 import java.util.List;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+/**
+ * The main class for the java plugin
+ */
 public class Main extends JavaPlugin{
     private static final String strClass = "Main";
     @Override

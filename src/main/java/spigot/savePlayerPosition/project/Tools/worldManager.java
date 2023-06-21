@@ -1,19 +1,19 @@
 package spigot.savePlayerPosition.project.Tools;
 
-import com.google.common.collect.Lists;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import spigot.savePlayerPosition.project.Main;
-import spigot.savePlayerPosition.project.Tools.sppMessager;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * A class that manages the world data and group data
+ */
 public class worldManager {
     private static final String strClass = "WorldManager";
     private static JavaPlugin plugin = JavaPlugin.getPlugin(Main.class);

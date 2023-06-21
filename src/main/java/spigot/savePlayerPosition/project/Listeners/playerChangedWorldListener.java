@@ -11,6 +11,11 @@ import spigot.savePlayerPosition.project.Tools.playerDataManager;
 import spigot.savePlayerPosition.project.Tools.sppDebugger;
 import spigot.savePlayerPosition.project.Tools.worldManager;
 
+/**
+ * @author Omar Radwan
+ * @version 1.0.0
+ * @about Listens for when the player changes worlds on the server
+ */
 public class playerChangedWorldListener implements Listener {
     private static final String strClass = "PlayerChangedWorldListener";
     @EventHandler (priority = EventPriority.HIGHEST)

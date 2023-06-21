@@ -9,6 +9,11 @@ import spigot.savePlayerPosition.project.Tools.sppDebugger;
 import spigot.savePlayerPosition.project.Tools.playerDataManager;
 import spigot.savePlayerPosition.project.Tools.worldManager;
 
+/**
+ * @author Omar Radwan
+ * @version 1.0.0
+ * @about Listens for when a player leaves a server
+ */
 public class leaveServerListener implements Listener {
     private final String strClass = "LeaveServerListener";
     @EventHandler (priority = EventPriority.MONITOR)

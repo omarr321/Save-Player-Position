@@ -8,6 +8,11 @@ import spigot.savePlayerPosition.project.Tools.sppDebugger;
 import spigot.savePlayerPosition.project.Tools.playerDataManager;
 import spigot.savePlayerPosition.project.Tools.worldManager;
 
+/**
+ * @author Omar Radwan
+ * @version 1.0.0
+ * @about Listens for when a player teleports
+ */
 public class playerTeleportListener implements Listener {
     private static final String strClass = "PlayerTeleportListener";
     @EventHandler (priority = EventPriority.MONITOR)

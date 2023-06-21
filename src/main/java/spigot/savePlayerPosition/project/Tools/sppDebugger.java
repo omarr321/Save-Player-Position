@@ -5,9 +5,17 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import spigot.savePlayerPosition.project.Main;
 
+/**
+ * A debug class that sends debug to the console
+ */
 public class sppDebugger {
     private static boolean debug = false;
     private static String title = "[" + JavaPlugin.getPlugin(Main.class).getName() + "]";
+
+    /**
+     * Sets the debug value for the debugger
+     * @param de - The bool value for debug, true to log debug messages, false if not
+     */
     public static void setDebug(boolean de) {
         sppDebugger.debug = de;
     }

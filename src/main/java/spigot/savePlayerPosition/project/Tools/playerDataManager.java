@@ -6,20 +6,28 @@ import spigot.savePlayerPosition.project.Main;
 
 import java.io.*;
 
+/**
+ * @author Omar Radwan
+ * @version 1.0.0
+ * @about Handles all calls to player data files
+ */
 public class playerDataManager {
     private static final File userData = new File(JavaPlugin.getPlugin(Main.class).getDataFolder(), "playerData");
     private static final File userWorldData = new File(userData, "worldData");
     private static final File userGroupData = new File(userData, "groupData");
-    private static final File userGroupFirstData = new File(userData, "groupFirstData");
     private static final String strClass = "PlayerDataManager";
 
     public static void enablePlayerMan() {
         userData.mkdir();
         userWorldData.mkdir();
         userGroupData.mkdir();
-        userGroupFirstData.mkdir();
     }
 
+    /**
+     * Checks for a player data file and creates one if none is found
+     * @param uuid - The uuid of the player
+     * @return true
+     */
     private static boolean checkPlayerWorldFile(String uuid) {
         File tempUser = new File(userWorldData, uuid + ".dat");
         if (!(tempUser.exists())) {
@@ -33,6 +41,14 @@ public class playerDataManager {
         return true;
     }
 
+    /**
+     * Saves the player x,y,z data for a world
+     * @param uuid - The uuid of the player
+     * @param key - The world the x,y,z data is for
+     * @param xValue
+     * @param yValue
+     * @param zValue
+     */
     public static void saveWorldData(String uuid, String key, double xValue, double yValue, double zValue) {
         checkPlayerWorldFile(uuid);
         String strMethod = "saveWorldData";
@@ -77,6 +93,12 @@ public class playerDataManager {
         }
     }
 
+    /**
+     * Returns The x,y,z of a world
+     * @param uuid - The uuid of the player
+     * @param key - The world to get x,y,z from
+     * @return - The x,y,z in a double array
+     */
     public static double[] getWorldData(String uuid, String key) {
         checkPlayerWorldFile(uuid);
         String strMethod = "getWorldData";
@@ -109,6 +131,11 @@ public class playerDataManager {
         return null;
     }
 
+    /**
+     * Checks a player's group data file and creates on if none is found
+     * @param uuid - The uuid of the player
+     * @return - True
+     */
     private static boolean checkPlayerGroupFile(String uuid) {
         File tempUser = new File(userGroupData, uuid + ".dat");
         if (!(tempUser.exists())) {
@@ -122,6 +149,12 @@ public class playerDataManager {
         return true;
     }
 
+    /**
+     * Gets the last world the player was in for a group
+     * @param uuid - The uuid of the player
+     * @param key - The group to get the last world for
+     * @return - The world name or null if none was found
+     */
     public static String getGroupData(String uuid, String key) {
         checkPlayerGroupFile(uuid);
         String strMethod = "getGroupData";
@@ -152,6 +185,12 @@ public class playerDataManager {
         return null;
     }
 
+    /**
+     * Saves the player last world for a group
+     * @param uuid - The uuid of the player
+     * @param key - The group that need to be saved
+     * @param value - The world that they were last in for this group
+     */
     public static void saveGroupData(String uuid, String key, String value) {
         String strMethod = "saveGroupData";
         checkPlayerGroupFile(uuid);

@@ -10,6 +10,11 @@ import spigot.savePlayerPosition.project.Tools.sppDebugger;
 import spigot.savePlayerPosition.project.Tools.playerDataManager;
 import spigot.savePlayerPosition.project.Tools.worldManager;
 
+/**
+ * @author Omar Radwan
+ * @version 1.0.0
+ * @about Listens for when a player joins a server
+ */
 public class joinServerListener implements Listener {
     private final String strClass = "JoinServerListener";
     @EventHandler (priority = EventPriority.HIGHEST)

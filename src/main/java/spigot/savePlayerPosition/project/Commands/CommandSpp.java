@@ -9,6 +9,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import spigot.savePlayerPosition.project.Main;
 import spigot.savePlayerPosition.project.Tools.*;
 
+/** @author Omar Radwan
+ * @version 1.0.0
+ * @about Gets a command string and figures out what to do
+ */
 public class CommandSpp implements CommandExecutor {
     private static final String strClass = "CommandSpp";
     @Override
@@ -40,7 +44,7 @@ public class CommandSpp implements CommandExecutor {
                     return true;
                 }
                 sppMessager.sendMessage(player, "---------------------------", ChatColor.DARK_AQUA);
-                sppMessager.sendMessage(player, "Save Player Position v0.1.0", ChatColor.GREEN);
+                sppMessager.sendMessage(player, "Save Player Position v1.0.0", ChatColor.GREEN);
                 sppMessager.sendMessage(player, "---------------------------", ChatColor.DARK_AQUA);
                 break;
             case "reload":
@@ -231,7 +235,7 @@ public class CommandSpp implements CommandExecutor {
         sppMessager.sendMessage(player, "/spp reload ", ChatColor.GREEN, "- Reloads the config", ChatColor.RESET);
         sppMessager.sendMessage(player, "/spp setdebug <bool> ", ChatColor.GREEN, "- Sets the debug value", ChatColor.RESET);
         sppMessager.sendMessage(player, "/spp blacklist [add/remove] <world> ", ChatColor.GREEN, "- Adds/Removes a world from the blacklist", ChatColor.RESET);
-        sppMessager.sendMessage(player, "/spp blacklist list ", ChatColor.GREEN, "- Lists all the blacklisted world", ChatColor.RESET);
+        sppMessager.sendMessage(player, "/spp blacklist list ", ChatColor.GREEN, "- Lists all the blacklisted worlds", ChatColor.RESET);
         sppMessager.sendMessage(player, "/spp group [create/delete] <group> " , ChatColor.GREEN, "- Creates/Deletes groups from the config", ChatColor.RESET);
         sppMessager.sendMessage(player, "/spp group [addWorld/removeWorld] <group> <world> ", ChatColor.GREEN, "- Adds/Removes worlds from a group", ChatColor.RESET);
         sppMessager.sendMessage(player, "/spp group list ", ChatColor.GREEN, "- Lists all the groups and what worlds are in them", ChatColor.RESET);

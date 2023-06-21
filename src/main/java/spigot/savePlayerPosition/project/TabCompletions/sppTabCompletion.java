@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import spigot.savePlayerPosition.project.Tools.worldManager;
 
+/**
+ * @author Omar Radwan
+ * @version 1.0.0
+ * @about Figures out the tab completion for the commands
+ */
 public class sppTabCompletion implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
