@@ -19,6 +19,7 @@ There is a permission system so you can give the player certain commands.
 | /spp help | Shows the help | \<none\> |
 | /spp version | Shows the plugin version | spp.command.version |
 | /spp reload | Reloads the config | spp.command.reload |
+| /spp clean | Cleans up old data | spp.admin.clean |
 | /spp setdebug \<bool\> | Sets the debug value | spp.command.setdebug |
 | /spp blacklist [add/remove] \<world\> | Adds/Removes a world from the blacklist | spp.admin.blacklist |
 | /spp blacklist list | List all the blacklisted worlds | spp.admin.blacklist |
