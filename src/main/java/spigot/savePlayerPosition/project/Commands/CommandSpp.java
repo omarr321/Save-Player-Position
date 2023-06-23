@@ -1,6 +1,8 @@
 package spigot.savePlayerPosition.project.Commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -8,6 +10,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import spigot.savePlayerPosition.project.Main;
 import spigot.savePlayerPosition.project.Tools.*;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /** @author Omar Radwan
  * @version 1.0.0
@@ -27,6 +33,17 @@ public class CommandSpp implements CommandExecutor {
             return true;
         }
         switch(args[0]) {
+            case "clean":
+                if (!(player.hasPermission("spp.*") || player.hasPermission("spp.admin.*") || player.hasPermission("spp.admin.clean"))) {
+                    sppMessager.sendMessage(player, "You do not have permission: ", ChatColor.RED, "spp.admin.clean", ChatColor.YELLOW);
+                    return true;
+                }
+                if (args.length != 1) {
+                    sppMessager.sendMessage(player, "Error: Incorrect args amount!", ChatColor.RED);
+                    return true;
+                }
+                clean(player);
+                break;
             case "help":
                 if (args.length != 1) {
                     sppMessager.sendMessage(player, "Error: Incorrect args amount!", ChatColor.RED);
@@ -44,7 +61,7 @@ public class CommandSpp implements CommandExecutor {
                     return true;
                 }
                 sppMessager.sendMessage(player, "---------------------------", ChatColor.DARK_AQUA);
-                sppMessager.sendMessage(player, "Save Player Position v1.0.0", ChatColor.GREEN);
+                sppMessager.sendMessage(player, "Save Player Position v1.1.0", ChatColor.GREEN);
                 sppMessager.sendMessage(player, "---------------------------", ChatColor.DARK_AQUA);
                 break;
             case "reload":
@@ -233,6 +250,7 @@ public class CommandSpp implements CommandExecutor {
         sppMessager.sendMessage(player, "/spp help ", ChatColor.GREEN, "- Shows this page", ChatColor.RESET);
         sppMessager.sendMessage(player, "/spp version ", ChatColor.GREEN, "- Shows the plugin version", ChatColor.RESET);
         sppMessager.sendMessage(player, "/spp reload ", ChatColor.GREEN, "- Reloads the config", ChatColor.RESET);
+        sppMessager.sendMessage(player, "/spp clean ", ChatColor.GREEN, "- Cleans up old data for the config and players", ChatColor.RESET);
         sppMessager.sendMessage(player, "/spp setdebug <bool> ", ChatColor.GREEN, "- Sets the debug value", ChatColor.RESET);
         sppMessager.sendMessage(player, "/spp blacklist [add/remove] <world> ", ChatColor.GREEN, "- Adds/Removes a world from the blacklist", ChatColor.RESET);
         sppMessager.sendMessage(player, "/spp blacklist list ", ChatColor.GREEN, "- Lists all the blacklisted worlds", ChatColor.RESET);
@@ -240,5 +258,86 @@ public class CommandSpp implements CommandExecutor {
         sppMessager.sendMessage(player, "/spp group [addWorld/removeWorld] <group> <world> ", ChatColor.GREEN, "- Adds/Removes worlds from a group", ChatColor.RESET);
         sppMessager.sendMessage(player, "/spp group list ", ChatColor.GREEN, "- Lists all the groups and what worlds are in them", ChatColor.RESET);
         sppMessager.sendMessage(player, ChatColor.DARK_AQUA + "---" + ChatColor.RED + "Page 1 of 1" + ChatColor.DARK_AQUA + "---");
+    }
+
+    private void clean(Player player) {
+        sppMessager.sendMessage(player, "Starting cleaning process...");
+        String[] groups = worldManager.getAllGroups().toArray(new String[0]);
+        String[] blacklisted = worldManager.getBlacklist().toArray(new String[0]);
+        List<World> allWorldList = Bukkit.getWorlds();
+        ArrayList<String> tempList = new ArrayList<>();
+        for (World world : allWorldList) {
+            tempList.add(world.getName());
+        }
+        String[] allWorld = tempList.toArray(new String[0]);
+
+        sppMessager.sendMessage(player, "Cleaning up old group data...");
+        for(String group : groups) {
+            String[] currGroupWorlds = worldManager.getWorldsInGroup(group).toArray(new String[0]);
+            for(String world : currGroupWorlds) {
+                boolean found = false;
+                for(String temp : allWorld) {
+                    if (temp.equals(world)) {
+                        found = true;
+                    }
+                }
+                if (!(found)) {
+                    worldManager.removeWorldFromGroup(group, world, player);
+                }
+            }
+        }
+
+        sppMessager.sendMessage(player, "Cleaning up blacklist...");
+        for (String blacklist : blacklisted) {
+            boolean found = false;
+            for (String temp : allWorld) {
+                if (temp.equals(blacklist)) {
+                    found = true;
+                }
+            }
+            if (!(found)) {
+                worldManager.removeBlacklistWorld(blacklist, player);
+            }
+        }
+
+        sppMessager.sendMessage(player, "Cleaning up old player group data...");
+        File userGroupFolder = playerDataManager.getUserGroupDataFolder();
+        for(File file : userGroupFolder.listFiles()) {
+            sppMessager.sendMessage(player, "Cleaning group data for " + file.getName().toString().split("\\.")[0]);
+            String[] groupData = playerDataManager.getGroupList(file.getName().toString().split("\\.")[0]);
+            for(String group : groupData) {
+                boolean found = false;
+                for(String currGroup : groups) {
+                    if (currGroup.equals(group)) {
+                        found = true;
+                    }
+                }
+                if (!(found)) {
+                    sppMessager.sendMessage(player, "Deleting group \"" + group + "\"");
+                    playerDataManager.removeGroupData(file.getName().toString().split("\\.")[0], group);
+                }
+            }
+        }
+
+        sppMessager.sendMessage(player, "Cleaning up old player world data...");
+        File userWorldFolder = playerDataManager.getUserWorldDataFolder();
+        for(File file : userWorldFolder.listFiles()) {
+            sppMessager.sendMessage(player, "Cleaning world data for " + file.getName().toString().split("\\.")[0]);
+            String[] worldData = playerDataManager.getWorldList(file.getName().toString().split("\\.")[0]);
+            for(String world : worldData) {
+                boolean found = false;
+                for(String currWorld : allWorld) {
+                    if (currWorld.equals(world)) {
+                        found = true;
+                    }
+                }
+                if (!(found)) {
+                    sppMessager.sendMessage(player, "Deleting world \"" + world + "\"");
+                    playerDataManager.removeWorldData(file.getName().toString().split("\\.")[0], world);
+                }
+            }
+        }
+
+        sppMessager.sendMessage(player, "All old data has been cleaned up!");
     }
 }

@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import spigot.savePlayerPosition.project.Main;
 
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * @author Omar Radwan
@@ -21,6 +22,14 @@ public class playerDataManager {
         userData.mkdir();
         userWorldData.mkdir();
         userGroupData.mkdir();
+    }
+
+    public static File getUserGroupDataFolder() {
+        return userGroupData;
+    }
+
+    public static File getUserWorldDataFolder() {
+        return userWorldData;
     }
 
     /**
@@ -84,6 +93,79 @@ public class playerDataManager {
             tempFile.close();
             new File(userWorldData, uuid + ".dat").delete();
             new File(userWorldData, uuid + ".dat.tmp").renameTo(new File(userWorldData, uuid + ".dat"));
+        } catch (FileNotFoundException e) {
+            sppDebugger.forceLog(strClass,strMethod, "Error: Issue finding player file!", ChatColor.RED);
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            sppDebugger.forceLog(strClass, strMethod, "Error: Issue loading player file!", ChatColor.RED);
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Removes world data from a player data file
+     * @param uuid - The uuid of the player
+     * @param key - The key of the data to remove
+     */
+    public static void removeWorldData(String uuid, String key) {
+        checkPlayerWorldFile(uuid);
+        String strMethod = "removeWorldData";
+        try {
+            sppDebugger.log(strClass, strMethod,"Checking file for world data of \"" + key + "\"...");
+            BufferedReader file = new BufferedReader(new FileReader(new File(userWorldData, uuid + ".dat")));
+            String line = file.readLine();
+            StringBuilder input = new StringBuilder();
+            File tempUser = new File(userWorldData, uuid + ".dat.tmp");
+            tempUser.createNewFile();
+            BufferedWriter tempFile = new BufferedWriter(new FileWriter(tempUser));
+
+            while (line != null) {
+                String currWorld = line.split(":")[0];
+                if (!(currWorld.equals(key))) {
+                    input.append(line).append('\n');
+                } else {
+                    sppDebugger.log(strClass, strMethod, "Removing world data for \"" + key + "\"...");
+                }
+                line = file.readLine();
+            }
+            sppDebugger.log(strClass, strMethod,"Writing data to temp file");
+            tempFile.append(input.toString());
+
+            file.close();
+            tempFile.close();
+            new File(userWorldData, uuid + ".dat").delete();
+            new File(userWorldData, uuid + ".dat.tmp").renameTo(new File(userWorldData, uuid + ".dat"));
+        } catch (FileNotFoundException e) {
+            sppDebugger.forceLog(strClass,strMethod, "Error: Issue finding player file!", ChatColor.RED);
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            sppDebugger.forceLog(strClass, strMethod, "Error: Issue loading player file!", ChatColor.RED);
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Gets a list of all world data a player has
+     * @param uuid - The uuid of the player
+     * @return - A list of all world data in the players save file
+     */
+    public static String[] getWorldList(String uuid) {
+        checkPlayerWorldFile(uuid);
+        String strMethod = "getWorldList";
+
+        ArrayList<String> worldList = new ArrayList<>();
+        try {
+            BufferedReader file = new BufferedReader(new FileReader(new File(userWorldData, uuid + ".dat")));
+            String line = file.readLine();
+
+            while (line != null) {
+                String currWorld = line.split(":")[0];
+                worldList.add(currWorld);
+                line = file.readLine();
+            }
+            file.close();
+
+            return worldList.toArray(new String[0]);
         } catch (FileNotFoundException e) {
             sppDebugger.forceLog(strClass,strMethod, "Error: Issue finding player file!", ChatColor.RED);
             throw new RuntimeException(e);
@@ -228,6 +310,69 @@ public class playerDataManager {
             new File(userGroupData, uuid + ".dat.tmp").renameTo(new File(userGroupData, uuid + ".dat"));
         } catch (FileNotFoundException e) {
             sppDebugger.forceLog(strClass, strMethod, "Error: Issue finding player file!", ChatColor.RED);
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            sppDebugger.forceLog(strClass, strMethod, "Error: Issue loading player file!", ChatColor.RED);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void removeGroupData(String uuid, String key) {
+        checkPlayerWorldFile(uuid);
+        String strMethod = "removeGroupData";
+        try {
+            sppDebugger.log(strClass, strMethod,"Checking file for group data of \"" + key + "\"...");
+            BufferedReader file = new BufferedReader(new FileReader(new File(userGroupData, uuid + ".dat")));
+            String line = file.readLine();
+            StringBuilder input = new StringBuilder();
+            File tempUser = new File(userGroupData, uuid + ".dat.tmp");
+            tempUser.createNewFile();
+            BufferedWriter tempFile = new BufferedWriter(new FileWriter(tempUser));
+
+            while (line != null) {
+                String currWorld = line.split(":")[0];
+                if (!(currWorld.equals(key))) {
+                    input.append(line).append('\n');
+                } else {
+                    sppDebugger.log(strClass, strMethod, "Removing group data for \"" + key + "\"...");
+                }
+                line = file.readLine();
+            }
+            sppDebugger.log(strClass, strMethod,"Writing data to temp file");
+            tempFile.append(input.toString());
+
+            file.close();
+            tempFile.close();
+            new File(userGroupData, uuid + ".dat").delete();
+            new File(userGroupData, uuid + ".dat.tmp").renameTo(new File(userGroupData, uuid + ".dat"));
+        } catch (FileNotFoundException e) {
+            sppDebugger.forceLog(strClass,strMethod, "Error: Issue finding player file!", ChatColor.RED);
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            sppDebugger.forceLog(strClass, strMethod, "Error: Issue loading player file!", ChatColor.RED);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String[] getGroupList(String uuid) {
+        checkPlayerWorldFile(uuid);
+        String strMethod = "getGroupList";
+
+        ArrayList<String> worldList = new ArrayList<>();
+        try {
+            BufferedReader file = new BufferedReader(new FileReader(new File(userGroupData, uuid + ".dat")));
+            String line = file.readLine();
+
+            while (line != null) {
+                String currWorld = line.split(":")[0];
+                worldList.add(currWorld);
+                line = file.readLine();
+            }
+            file.close();
+
+            return worldList.toArray(new String[0]);
+        } catch (FileNotFoundException e) {
+            sppDebugger.forceLog(strClass,strMethod, "Error: Issue finding player file!", ChatColor.RED);
             throw new RuntimeException(e);
         } catch (IOException e) {
             sppDebugger.forceLog(strClass, strMethod, "Error: Issue loading player file!", ChatColor.RED);

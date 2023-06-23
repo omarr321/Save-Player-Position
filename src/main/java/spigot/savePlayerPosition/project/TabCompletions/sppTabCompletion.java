@@ -29,6 +29,7 @@ public class sppTabCompletion implements TabCompleter {
                     list.add("setdebug");
                     list.add("blacklist");
                     list.add("group");
+                    list.add("clean");
                     return list;
                 case 2:
                     if (args[0].equalsIgnoreCase("setdebug")) {
