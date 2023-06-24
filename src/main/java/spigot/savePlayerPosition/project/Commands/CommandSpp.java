@@ -61,7 +61,7 @@ public class CommandSpp implements CommandExecutor {
                     return true;
                 }
                 sppMessager.sendMessage(player, "---------------------------", ChatColor.DARK_AQUA);
-                sppMessager.sendMessage(player, "Save Player Position v1.1.0", ChatColor.GREEN);
+                sppMessager.sendMessage(player, "Save Player Position v1.1.1", ChatColor.GREEN);
                 sppMessager.sendMessage(player, "---------------------------", ChatColor.DARK_AQUA);
                 break;
             case "reload":
@@ -303,7 +303,7 @@ public class CommandSpp implements CommandExecutor {
         sppMessager.sendMessage(player, "Cleaning up old player group data...");
         File userGroupFolder = playerDataManager.getUserGroupDataFolder();
         for(File file : userGroupFolder.listFiles()) {
-            sppMessager.sendMessage(player, "Cleaning group data for " + file.getName().toString().split("\\.")[0]);
+            //sppMessager.sendMessage(player, "Cleaning group data for " + file.getName().toString().split("\\.")[0]);
             String[] groupData = playerDataManager.getGroupList(file.getName().toString().split("\\.")[0]);
             for(String group : groupData) {
                 boolean found = false;
@@ -322,7 +322,7 @@ public class CommandSpp implements CommandExecutor {
         sppMessager.sendMessage(player, "Cleaning up old player world data...");
         File userWorldFolder = playerDataManager.getUserWorldDataFolder();
         for(File file : userWorldFolder.listFiles()) {
-            sppMessager.sendMessage(player, "Cleaning world data for " + file.getName().toString().split("\\.")[0]);
+            //sppMessager.sendMessage(player, "Cleaning world data for " + file.getName().toString().split("\\.")[0]);
             String[] worldData = playerDataManager.getWorldList(file.getName().toString().split("\\.")[0]);
             for(String world : worldData) {
                 boolean found = false;
