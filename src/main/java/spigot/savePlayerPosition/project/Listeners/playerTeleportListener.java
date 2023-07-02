@@ -32,6 +32,13 @@ public class playerTeleportListener implements Listener {
                     playerDataManager.saveGroupData(event.getPlayer().getUniqueId().toString(), fromWorldGroup, event.getTo().getWorld().getName());
                 }
             }
+            if (event.getCause() == PlayerTeleportEvent.TeleportCause.NETHER_PORTAL) {
+                sppDebugger.log(strClass, strMethod, event.getPlayer().getDisplayName() + " has teleported with a nether portal, deleting world data for \"" + event.getTo().getWorld().getName() + "\"");
+                playerDataManager.removeWorldData(event.getPlayer().getUniqueId().toString(), event.getTo().getWorld().getName());
+            } else if (event.getCause() == PlayerTeleportEvent.TeleportCause.END_PORTAL) {
+                sppDebugger.log(strClass, strMethod, event.getPlayer().getDisplayName() + " has teleported with an end portal, deleting world data for \"" + event.getTo().getWorld().getName() + "\"");
+                playerDataManager.removeWorldData(event.getPlayer().getUniqueId().toString(), event.getTo().getWorld().getName());
+            }
         }
     }
 }

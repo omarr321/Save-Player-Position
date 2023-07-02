@@ -61,7 +61,8 @@ public class CommandSpp implements CommandExecutor {
                     return true;
                 }
                 sppMessager.sendMessage(player, "---------------------------", ChatColor.DARK_AQUA);
-                sppMessager.sendMessage(player, "Save Player Position v1.1.1", ChatColor.GREEN);
+                sppMessager.sendMessage(player, "Save Player Position v1.2.1", ChatColor.GREEN);
+                sppMessager.sendMessage(player, "Minecraft Native version: 1.19.4", ChatColor.GREEN);
                 sppMessager.sendMessage(player, "---------------------------", ChatColor.DARK_AQUA);
                 break;
             case "reload":

@@ -1,7 +1,7 @@
 name: Save-Player-Position
 author: Omar Radwan
 main: spigot.savePlayerPosition.project.Main
-version: 1.1.1
+version: 1.2.1
 api-version: 1.19
 
 commands:
