@@ -12,7 +12,7 @@ import spigot.savePlayerPosition.project.Listeners.playerTeleportListener;
 import spigot.savePlayerPosition.project.TabCompletions.sppTabCompletion;
 import spigot.savePlayerPosition.project.Tools.playerDataManager;
 import spigot.savePlayerPosition.project.Tools.sppDebugger;
-import spigot.savePlayerPosition.project.Tools.worldManager;
+import spigot.savePlayerPosition.project.Tools.configManager;
 import java.util.List;
 
 /**
@@ -25,7 +25,7 @@ public class Main extends JavaPlugin{
         String strMethod = "onEnable";
         sppDebugger.forceLog(strClass, strMethod, "Enabling " + this.getName(), ChatColor.GREEN);
         sppDebugger.log(strClass, strMethod, "Enabling config...");
-        worldManager.enableWorldMan();
+        configManager.enableWorldMan();
         sppDebugger.log(strClass, strMethod, "Enabling playerData folder...");
         playerDataManager.enablePlayerMan();
         sppDebugger.log(strClass, strMethod, "Enabling commands...");

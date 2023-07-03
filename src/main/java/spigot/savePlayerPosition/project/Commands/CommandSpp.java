@@ -109,10 +109,10 @@ public class CommandSpp implements CommandExecutor {
                     switch (args[1]) {
                         case "list":
                             sppMessager.sendMessage(player, ChatColor.DARK_AQUA + "---" + ChatColor.RED + "Black List" + ChatColor.DARK_AQUA + "---");
-                            if (worldManager.getBlacklist().toString().length() == 2) {
+                            if (configManager.getBlacklist().toString().length() == 2) {
                                 sppMessager.sendMessage(player, "NONE", ChatColor.YELLOW);
                             } else {
-                                for(String world : worldManager.getBlacklist()) {
+                                for(String world : configManager.getBlacklist()) {
                                     sppMessager.sendMessage(player, "- ", ChatColor.RESET, world, ChatColor.GREEN);
                                 }
                             }
@@ -128,16 +128,16 @@ public class CommandSpp implements CommandExecutor {
                     }
                     switch (args[1]) {
                         case "add":
-                            for(String world : worldManager.getWorldsInAllGroups()) {
+                            for(String world : configManager.getWorldsInAllGroups()) {
                                 if (world.equals(args[2])) {
                                     sppMessager.sendMessage(player, "That world is in a group and can not be added to the blacklist");
                                     return true;
                                 }
                             }
-                            worldManager.addBlacklistWorld(args[2], player);
+                            configManager.addBlacklistWorld(args[2], player);
                             break;
                         case "remove":
-                            worldManager.removeBlacklistWorld(args[2], player);
+                            configManager.removeBlacklistWorld(args[2], player);
                             break;
                         default:
                             sppMessager.sendMessage(player, "Error: Unknown value!", ChatColor.RED);
@@ -162,10 +162,10 @@ public class CommandSpp implements CommandExecutor {
                         }
                         switch (args[1]) {
                             case "create":
-                                worldManager.createGroup(args[2], player);
+                                configManager.createGroup(args[2], player);
                                 break;
                             case "delete":
-                                worldManager.deleteGroup(args[2], player);
+                                configManager.deleteGroup(args[2], player);
                         }
                         break;
                     case "addWorld":
@@ -180,22 +180,22 @@ public class CommandSpp implements CommandExecutor {
                         }
                         switch (args[1]) {
                             case "addWorld":
-                                for(String world : worldManager.getBlacklist()) {
+                                for(String world : configManager.getBlacklist()) {
                                     if (world.equals(args[3])) {
                                         sppMessager.sendMessage(player, "That world is in the blacklist and can not be added to a group");
                                         return true;
                                     }
                                 }
-                                for(String world : worldManager.getWorldsInAllGroups()) {
+                                for(String world : configManager.getWorldsInAllGroups()) {
                                     if (world.equals(args[3])) {
                                         sppMessager.sendMessage(player, "That world is in a group and can not be added");
                                         return true;
                                     }
                                 }
-                                worldManager.addWorldToGroup(args[2], args[3], player);
+                                configManager.addWorldToGroup(args[2], args[3], player);
                                 break;
                             case "removeWorld":
-                                worldManager.removeWorldFromGroup(args[2], args[3], player);
+                                configManager.removeWorldFromGroup(args[2], args[3], player);
                         }
                         break;
                     case "list":
@@ -204,13 +204,13 @@ public class CommandSpp implements CommandExecutor {
                             return true;
                         }
                         sppMessager.sendMessage(player, ChatColor.DARK_AQUA + "---" + ChatColor.RED + "Groups" + ChatColor.DARK_AQUA + "---");
-                        if (worldManager.getAllGroups().toString().length() == 2) {
+                        if (configManager.getAllGroups().toString().length() == 2) {
                             sppMessager.sendMessage(player, "NONE", ChatColor.YELLOW);
                         } else {
-                            for(String group : worldManager.getAllGroups()) {
+                            for(String group : configManager.getAllGroups()) {
                                 sppMessager.sendMessage(player, "- ", ChatColor.RESET, group, ChatColor.GREEN);
                                 StringBuilder temp = new StringBuilder();
-                                for(String world : worldManager.getWorldsInGroup(group)) {
+                                for(String world : configManager.getWorldsInGroup(group)) {
                                     temp.append(world + ", ");
                                 }
                                 if (temp.length() == 0) {
@@ -224,6 +224,34 @@ public class CommandSpp implements CommandExecutor {
                         break;
                     default:
                         sppMessager.sendMessage(player, "Error: Unknown command!", ChatColor.RED);
+                }
+                break;
+            case "setOnTeleport":
+                if (!(player.hasPermission("spp.*") || player.hasPermission("spp.admin.*") || player.hasPermission("spp.admin.onTeleport"))) {
+                    sppMessager.sendMessage(player, "You do not have permission: ", ChatColor.RED, "spp.admin.onTeleport", ChatColor.YELLOW);
+                    return true;
+                }
+                if (args.length != 3) {
+                    sppMessager.sendMessage(player, "Error: Incorrect args amount!", ChatColor.RED);
+                    return true;
+                }
+                switch (args[1]) {
+                    case "netherPortal":
+                        switch (args[2]) {
+                            case "true":
+                                break;
+                            case "false":
+                                break;
+                            default:
+                                sppMessager.sendMessage(player, "Error: Not a boolean!", ChatColor.RED);
+                        }
+                        break;
+                    case "endPortal":
+                        break;
+                    case "endGateway":
+                        break;
+                    default:
+                        sppMessager.sendMessage(player, "Error: Unknown teleport type!", ChatColor.RED);
                 }
                 break;
             default:
@@ -258,13 +286,13 @@ public class CommandSpp implements CommandExecutor {
         sppMessager.sendMessage(player, "/spp group [create/delete] <group> " , ChatColor.GREEN, "- Creates/Deletes groups from the config", ChatColor.RESET);
         sppMessager.sendMessage(player, "/spp group [addWorld/removeWorld] <group> <world> ", ChatColor.GREEN, "- Adds/Removes worlds from a group", ChatColor.RESET);
         sppMessager.sendMessage(player, "/spp group list ", ChatColor.GREEN, "- Lists all the groups and what worlds are in them", ChatColor.RESET);
+        sppMessager.sendMessage(player, "/spp setOnTeleport <teleportType> <bool> ",ChatColor.GREEN, "- Sets if the plugin should works on different type of teleports", ChatColor.RESET);
         sppMessager.sendMessage(player, ChatColor.DARK_AQUA + "---" + ChatColor.RED + "Page 1 of 1" + ChatColor.DARK_AQUA + "---");
     }
-
     private void clean(Player player) {
         sppMessager.sendMessage(player, "Starting cleaning process...");
-        String[] groups = worldManager.getAllGroups().toArray(new String[0]);
-        String[] blacklisted = worldManager.getBlacklist().toArray(new String[0]);
+        String[] groups = configManager.getAllGroups().toArray(new String[0]);
+        String[] blacklisted = configManager.getBlacklist().toArray(new String[0]);
         List<World> allWorldList = Bukkit.getWorlds();
         ArrayList<String> tempList = new ArrayList<>();
         for (World world : allWorldList) {
@@ -274,7 +302,7 @@ public class CommandSpp implements CommandExecutor {
 
         sppMessager.sendMessage(player, "Cleaning up old group data...");
         for(String group : groups) {
-            String[] currGroupWorlds = worldManager.getWorldsInGroup(group).toArray(new String[0]);
+            String[] currGroupWorlds = configManager.getWorldsInGroup(group).toArray(new String[0]);
             for(String world : currGroupWorlds) {
                 boolean found = false;
                 for(String temp : allWorld) {
@@ -283,7 +311,7 @@ public class CommandSpp implements CommandExecutor {
                     }
                 }
                 if (!(found)) {
-                    worldManager.removeWorldFromGroup(group, world, player);
+                    configManager.removeWorldFromGroup(group, world, player);
                 }
             }
         }
@@ -297,7 +325,7 @@ public class CommandSpp implements CommandExecutor {
                 }
             }
             if (!(found)) {
-                worldManager.removeBlacklistWorld(blacklist, player);
+                configManager.removeBlacklistWorld(blacklist, player);
             }
         }
 

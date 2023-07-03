@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import spigot.savePlayerPosition.project.Tools.worldManager;
+import spigot.savePlayerPosition.project.Tools.configManager;
 
 /**
  * @author Omar Radwan
@@ -50,22 +50,22 @@ public class sppTabCompletion implements TabCompleter {
                 case 3:
                     switch(args[1]) {
                         case "add":
-                            list.addAll(worldManager.getAllWorldsNotInGroupOrBlacklist());
+                            list.addAll(configManager.getAllWorldsNotInGroupOrBlacklist());
                             break;
                         case "remove":
-                            list.addAll(worldManager.getBlacklist());
+                            list.addAll(configManager.getBlacklist());
                             break;
                         case "delete":
                         case "removeWorld":
                         case "addWorld":
-                            list.addAll(worldManager.getAllGroups());
+                            list.addAll(configManager.getAllGroups());
                     }
                     return list;
                 case 4:
                     if (args[1].equalsIgnoreCase("removeWorld")) {
-                        list.addAll(worldManager.getWorldsInGroup(args[2]));
+                        list.addAll(configManager.getWorldsInGroup(args[2]));
                     } else if (args[1].equalsIgnoreCase("addWorld")) {
-                        list.addAll(worldManager.getAllWorldsNotInGroupOrBlacklist());
+                        list.addAll(configManager.getAllWorldsNotInGroupOrBlacklist());
                     }
                 default:
                     return list;

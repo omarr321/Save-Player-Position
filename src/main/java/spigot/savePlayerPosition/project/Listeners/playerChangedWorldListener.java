@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import spigot.savePlayerPosition.project.Tools.playerDataManager;
 import spigot.savePlayerPosition.project.Tools.sppDebugger;
-import spigot.savePlayerPosition.project.Tools.worldManager;
+import spigot.savePlayerPosition.project.Tools.configManager;
 
 /**
  * @author Omar Radwan
@@ -24,7 +24,7 @@ public class playerChangedWorldListener implements Listener {
         sppDebugger.log(strClass, strMethod, event.getPlayer().getDisplayName() + "(" + event.getPlayer().getUniqueId() + ")" + " has joined the world \"" + event.getPlayer().getWorld().getName() + "\"");
         teleportPlayer(event.getPlayer(), event.getPlayer().getWorld().getName());
 
-        String toWorldGroup = worldManager.getGroupWorldIsPartOf(event.getPlayer().getWorld().getName());
+        String toWorldGroup = configManager.getGroupWorldIsPartOf(event.getPlayer().getWorld().getName());
         if (toWorldGroup != null) {
             sppDebugger.log(strClass, strMethod, event.getPlayer().getDisplayName() + " has joined group \"" + toWorldGroup + "\"");
             String currGroupWorld = playerDataManager.getGroupData(event.getPlayer().getUniqueId().toString(), toWorldGroup);
@@ -40,7 +40,7 @@ public class playerChangedWorldListener implements Listener {
         double[] cords = playerDataManager.getWorldData(player.getUniqueId().toString(), world);
         if (cords != null) {
             sppDebugger.log(strClass, strMethod, player.getDisplayName() + " saved cords for \"" + world + "\": " + cords[0] + ". " + cords[1] + ", " + cords[2]);
-            if (worldManager.checkBlacklist(world)) {
+            if (configManager.checkBlacklist(world)) {
                 sppDebugger.log(strClass, strMethod, "World \"" + world + "\" is blacklisted, skipping");
             } else {
                 Location loc = new Location(Bukkit.getWorld(world), cords[0], cords[1], cords[2]);

@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * A class that manages the world data and group data
  */
-public class worldManager {
+public class configManager {
     private static final String strClass = "WorldManager";
     private static JavaPlugin plugin = JavaPlugin.getPlugin(Main.class);
     private static FileConfiguration config = plugin.getConfig();
@@ -206,16 +206,16 @@ public class worldManager {
 
     public static ArrayList<String> getWorldsInAllGroups() {
         ArrayList<String> worlds = new ArrayList<>();
-        ArrayList<String> groups = worldManager.getAllGroups();
+        ArrayList<String> groups = configManager.getAllGroups();
         for(String group : groups) {
-            worlds.addAll(worldManager.getWorldsInGroup(group));
+            worlds.addAll(configManager.getWorldsInGroup(group));
         }
         return worlds;
     }
 
     public static ArrayList<String> getAllWorldsNotInGroupOrBlacklist() {
         ArrayList<String> groupWorlds = getWorldsInAllGroups();
-        ArrayList<String> blacklistedWorlds = worldManager.getBlacklist();
+        ArrayList<String> blacklistedWorlds = configManager.getBlacklist();
         ArrayList<String> temp = new ArrayList<>();
         List<World> allWorld = Bukkit.getWorlds();
 
@@ -236,5 +236,18 @@ public class worldManager {
             }
         }
         return null;
+    }
+
+    public static String getTeleport(String teleportKey) {
+        String strMethod = "getTeleport";
+        String value = config.getString(teleportKey);
+        sppDebugger.log(strClass, strMethod, "Teleport \"" + teleportKey + "\" value is \"" + value + "\"");
+        return value;
+    }
+
+    public static void setTeleport(String teleportKey, String value) {
+        String strMethod = "setTeleport";
+        sppDebugger.log(strClass, strMethod, "Setting \"" + teleportKey + "\" value to \"" + value + "\"");
+        config.set(teleportKey, value);
     }
 }
