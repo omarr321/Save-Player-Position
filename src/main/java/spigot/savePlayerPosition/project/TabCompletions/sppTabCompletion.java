@@ -30,21 +30,31 @@ public class sppTabCompletion implements TabCompleter {
                     list.add("blacklist");
                     list.add("group");
                     list.add("clean");
+                    list.add("setOnTeleport");
                     return list;
                 case 2:
-                    if (args[0].equalsIgnoreCase("setdebug")) {
-                        list.add("true");
-                        list.add("false");
-                    } else if (args[0].equalsIgnoreCase("blacklist")) {
-                        list.add("add");
-                        list.add("remove");
-                        list.add("list");
-                    } else if (args[0].equalsIgnoreCase("group")) {
-                        list.add("create");
-                        list.add("delete");
-                        list.add("addWorld");
-                        list.add("removeWorld");
-                        list.add("list");
+                    switch(args[0]) {
+                        case "setdebug":
+                            list.add("true");
+                            list.add("false");
+                            break;
+                        case "blacklist":
+                            list.add("add");
+                            list.add("remove");
+                            list.add("list");
+                            break;
+                        case "group":
+                            list.add("create");
+                            list.add("delete");
+                            list.add("addWorld");
+                            list.add("removeWorld");
+                            list.add("list");
+                            break;
+                        case "setOnTeleport":
+                            list.add("netherPortal");
+                            list.add("endPortal");
+                            list.add("endGateway");
+                            break;
                     }
                     return list;
                 case 3:
@@ -59,6 +69,12 @@ public class sppTabCompletion implements TabCompleter {
                         case "removeWorld":
                         case "addWorld":
                             list.addAll(configManager.getAllGroups());
+                            break;
+                        case "netherPortal":
+                        case "endPortal":
+                        case "endGateway":
+                            list.add("true");
+                            list.add("false");
                     }
                     return list;
                 case 4:

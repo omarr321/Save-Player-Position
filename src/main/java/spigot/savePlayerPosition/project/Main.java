@@ -25,7 +25,7 @@ public class Main extends JavaPlugin{
         String strMethod = "onEnable";
         sppDebugger.forceLog(strClass, strMethod, "Enabling " + this.getName(), ChatColor.GREEN);
         sppDebugger.log(strClass, strMethod, "Enabling config...");
-        configManager.enableWorldMan();
+        configManager.enableConfigMan();
         sppDebugger.log(strClass, strMethod, "Enabling playerData folder...");
         playerDataManager.enablePlayerMan();
         sppDebugger.log(strClass, strMethod, "Enabling commands...");

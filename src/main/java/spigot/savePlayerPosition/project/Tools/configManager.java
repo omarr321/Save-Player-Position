@@ -18,7 +18,7 @@ public class configManager {
     private static final String strClass = "WorldManager";
     private static JavaPlugin plugin = JavaPlugin.getPlugin(Main.class);
     private static FileConfiguration config = plugin.getConfig();
-    public static void enableWorldMan() {
+    public static void enableConfigMan() {
         plugin.saveDefaultConfig();
         sppDebugger.setDebug(config.getBoolean("debug"));
     }
@@ -249,5 +249,6 @@ public class configManager {
         String strMethod = "setTeleport";
         sppDebugger.log(strClass, strMethod, "Setting \"" + teleportKey + "\" value to \"" + value + "\"");
         config.set(teleportKey, value);
+        plugin.saveConfig();
     }
 }

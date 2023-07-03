@@ -61,8 +61,8 @@ public class CommandSpp implements CommandExecutor {
                     return true;
                 }
                 sppMessager.sendMessage(player, "---------------------------", ChatColor.DARK_AQUA);
-                sppMessager.sendMessage(player, "Save Player Position v1.2.1", ChatColor.GREEN);
-                sppMessager.sendMessage(player, "Minecraft Native version: 1.19.4", ChatColor.GREEN);
+                sppMessager.sendMessage(player, "Save Player Position v1.3.1", ChatColor.GREEN);
+                sppMessager.sendMessage(player, "Minecraft Native version: 1.19", ChatColor.GREEN);
                 sppMessager.sendMessage(player, "---------------------------", ChatColor.DARK_AQUA);
                 break;
             case "reload":
@@ -239,16 +239,38 @@ public class CommandSpp implements CommandExecutor {
                     case "netherPortal":
                         switch (args[2]) {
                             case "true":
+                                configManager.setTeleport("netherPortalTeleport", "true");
                                 break;
                             case "false":
+                                configManager.setTeleport("netherPortalTeleport", "false");
                                 break;
                             default:
                                 sppMessager.sendMessage(player, "Error: Not a boolean!", ChatColor.RED);
                         }
                         break;
                     case "endPortal":
+                        switch (args[2]) {
+                            case "true":
+                                configManager.setTeleport("endPortalTeleport", "true");
+                                break;
+                            case "false":
+                                configManager.setTeleport("endPortalTeleport", "false");
+                                break;
+                            default:
+                                sppMessager.sendMessage(player, "Error: Not a boolean!", ChatColor.RED);
+                        }
                         break;
                     case "endGateway":
+                        switch (args[2]) {
+                            case "true":
+                                configManager.setTeleport("endGateTeleport", "true");
+                                break;
+                            case "false":
+                                configManager.setTeleport("endGateTeleport", "false");
+                                break;
+                            default:
+                                sppMessager.sendMessage(player, "Error: Not a boolean!", ChatColor.RED);
+                        }
                         break;
                     default:
                         sppMessager.sendMessage(player, "Error: Unknown teleport type!", ChatColor.RED);
