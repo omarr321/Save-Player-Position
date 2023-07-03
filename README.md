@@ -26,3 +26,4 @@ There is a permission system so you can give the player certain commands.
 | /spp group [create/delete] \<group\> | Creates/Deletes groups | spp.admin.group.groups |
 | /spp group [addWorld/removeWorld] \<group\> \<world\> | Adds/Removes a world from a group | spp.admin.group.worlds |
 | /spp group list | Lists all the groups and what worlds are in them | spp.admin.group.groups |
+| /spp setOnTeleport \<teleportType\> \<bool\> | Sets if the plugin should works on different type of teleports | spp.admin.onTeleport |
