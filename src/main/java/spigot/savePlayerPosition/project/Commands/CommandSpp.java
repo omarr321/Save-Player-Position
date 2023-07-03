@@ -239,10 +239,12 @@ public class CommandSpp implements CommandExecutor {
                     case "netherPortal":
                         switch (args[2]) {
                             case "true":
-                                configManager.setTeleport("netherPortalTeleport", "true");
+                                configManager.setTeleport("netherPortalTeleport", true);
+                                sppMessager.sendMessage(player, "Teleport on nether portal was set to true");
                                 break;
                             case "false":
-                                configManager.setTeleport("netherPortalTeleport", "false");
+                                configManager.setTeleport("netherPortalTeleport", false);
+                                sppMessager.sendMessage(player, "Teleport on nether portal was set to false");
                                 break;
                             default:
                                 sppMessager.sendMessage(player, "Error: Not a boolean!", ChatColor.RED);
@@ -251,10 +253,12 @@ public class CommandSpp implements CommandExecutor {
                     case "endPortal":
                         switch (args[2]) {
                             case "true":
-                                configManager.setTeleport("endPortalTeleport", "true");
+                                configManager.setTeleport("endPortalTeleport", true);
+                                sppMessager.sendMessage(player, "Teleport on end portal was set to true");
                                 break;
                             case "false":
-                                configManager.setTeleport("endPortalTeleport", "false");
+                                configManager.setTeleport("endPortalTeleport", false);
+                                sppMessager.sendMessage(player, "Teleport on end portal was set to false");
                                 break;
                             default:
                                 sppMessager.sendMessage(player, "Error: Not a boolean!", ChatColor.RED);
@@ -263,10 +267,12 @@ public class CommandSpp implements CommandExecutor {
                     case "endGateway":
                         switch (args[2]) {
                             case "true":
-                                configManager.setTeleport("endGateTeleport", "true");
+                                configManager.setTeleport("endGateTeleport", true);
+                                sppMessager.sendMessage(player, "Teleport on end gateway was set to true");
                                 break;
                             case "false":
-                                configManager.setTeleport("endGateTeleport", "false");
+                                configManager.setTeleport("endGateTeleport", false);
+                                sppMessager.sendMessage(player, "Teleport on end gateway was set to false");
                                 break;
                             default:
                                 sppMessager.sendMessage(player, "Error: Not a boolean!", ChatColor.RED);

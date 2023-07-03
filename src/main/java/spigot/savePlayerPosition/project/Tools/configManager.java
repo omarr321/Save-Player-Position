@@ -238,14 +238,14 @@ public class configManager {
         return null;
     }
 
-    public static String getTeleport(String teleportKey) {
+    public static boolean getTeleport(String teleportKey) {
         String strMethod = "getTeleport";
-        String value = config.getString(teleportKey);
+        Boolean value = config.getBoolean(teleportKey);
         sppDebugger.log(strClass, strMethod, "Teleport \"" + teleportKey + "\" value is \"" + value + "\"");
         return value;
     }
 
-    public static void setTeleport(String teleportKey, String value) {
+    public static void setTeleport(String teleportKey, Boolean value) {
         String strMethod = "setTeleport";
         sppDebugger.log(strClass, strMethod, "Setting \"" + teleportKey + "\" value to \"" + value + "\"");
         config.set(teleportKey, value);
