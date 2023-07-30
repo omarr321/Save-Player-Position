@@ -7,6 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import spigot.savePlayerPosition.project.Main;
 import spigot.savePlayerPosition.project.Tools.*;
@@ -21,6 +22,7 @@ import java.util.List;
  */
 public class CommandSpp implements CommandExecutor {
     private static final String strClass = "CommandSpp";
+    PluginDescriptionFile pluginFile = JavaPlugin.getPlugin(Main.class).getDescription();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
@@ -60,9 +62,12 @@ public class CommandSpp implements CommandExecutor {
                     sppMessager.sendMessage(player, "Error: Incorrect args amount!", ChatColor.RED);
                     return true;
                 }
+
                 sppMessager.sendMessage(player, "---------------------------", ChatColor.DARK_AQUA);
-                sppMessager.sendMessage(player, "Save Player Position v1.3.1", ChatColor.GREEN);
-                sppMessager.sendMessage(player, "Minecraft Native version: 1.19", ChatColor.GREEN);
+                sppMessager.sendMessage(player, pluginFile.getName(), ChatColor.GREEN);
+                sppMessager.sendMessage(player, "Description: " + pluginFile.getDescription());
+                sppMessager.sendMessage(player, "Version: " + pluginFile.getVersion());
+                sppMessager.sendMessage(player, "Minecraft Native version: " + pluginFile.getAPIVersion(), ChatColor.GREEN);
                 sppMessager.sendMessage(player, "---------------------------", ChatColor.DARK_AQUA);
                 break;
             case "reload":

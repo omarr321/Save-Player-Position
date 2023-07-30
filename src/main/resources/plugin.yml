@@ -3,7 +3,8 @@ author: Omar Radwan
 main: spigot.savePlayerPosition.project.Main
 version: 1.3.1
 api-version: 1.19
-
+description: Save Player Position is a simple plugin that saves a player's position on the server when they leave a world or the server. This plugin will bring them to their last position when they enter the world.
+website: https://www.spigotmc.org/resources/save-player-position.110643/
 commands:
   spp:
     description: Root command for all spp commands
