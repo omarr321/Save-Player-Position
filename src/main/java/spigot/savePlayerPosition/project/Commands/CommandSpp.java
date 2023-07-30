@@ -64,10 +64,10 @@ public class CommandSpp implements CommandExecutor {
                 }
 
                 sppMessager.sendMessage(player, "---------------------------", ChatColor.DARK_AQUA);
-                sppMessager.sendMessage(player, pluginFile.getName(), ChatColor.GREEN);
-                sppMessager.sendMessage(player, "Description: " + pluginFile.getDescription());
-                sppMessager.sendMessage(player, "Version: " + pluginFile.getVersion());
-                sppMessager.sendMessage(player, "Minecraft Native version: " + pluginFile.getAPIVersion(), ChatColor.GREEN);
+                sppMessager.sendMessage(player, pluginFile.getName(), ChatColor.YELLOW);
+                sppMessager.sendMessage(player, "Description: ", ChatColor.GREEN, pluginFile.getDescription(), ChatColor.RESET);
+                sppMessager.sendMessage(player, "Version: ", ChatColor.GREEN, pluginFile.getVersion(), ChatColor.RESET);
+                sppMessager.sendMessage(player, "Minecraft Native version: ", ChatColor.GREEN,pluginFile.getAPIVersion(), ChatColor.RESET);
                 sppMessager.sendMessage(player, "---------------------------", ChatColor.DARK_AQUA);
                 break;
             case "reload":
