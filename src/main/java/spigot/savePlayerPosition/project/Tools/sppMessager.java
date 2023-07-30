@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
  * A class that sends messages to a player
  */
 public class sppMessager {
-    private static String titleLabel = ChatColor.DARK_AQUA + "[SPP]" + ": ";
+    private static final String titleLabel = ChatColor.DARK_AQUA + "[SPP]" + ": ";
     public static void sendMessage(Player player, String message) {
         player.sendMessage(titleLabel + ChatColor.RESET + message);
     }
