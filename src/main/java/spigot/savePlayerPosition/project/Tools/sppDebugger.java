@@ -10,7 +10,7 @@ import spigot.savePlayerPosition.project.Main;
  */
 public class sppDebugger {
     private static boolean debug = false;
-    private static String title = "[" + JavaPlugin.getPlugin(Main.class).getName() + "]";
+    private static final String title = "[" + JavaPlugin.getPlugin(Main.class).getName() + "]";
 
     /**
      * Sets the debug value for the debugger
