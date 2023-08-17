@@ -94,6 +94,7 @@ public class configManager {
             return;
         }
         config.set("world.group." + name, new ArrayList<String>());
+        //config.set("world.groupRespawn." + name, "NONE");
         plugin.saveConfig();
         sppDebugger.log(strClass, strMethod, "Group \"" + name + "\" has been created");
         sppMessager.sendMessage(player, "Group \"" + name + "\" has been created");
@@ -108,10 +109,37 @@ public class configManager {
             return;
         }
         config.set("world.group." + name, null);
+        //config.set("world.groupRespawn." + name, null);
         plugin.saveConfig();
         sppMessager.sendMessage(player, "Group \"" + name + "\" has been deleted");
         sppDebugger.log(strClass, strMethod, "Group \"" + name + "\" has been deleted");
     }
+
+    /*
+    public static void setGroupRespawn(String name, String respawnWorld, Player player) {
+        String strMethod = "setGroupRespawn";
+        sppDebugger.log(strClass, strMethod, "Attempting to set respawn world to \"" + respawnWorld + "\" for group \"" + name + "\"");
+        if (!(groupExists(name))) {
+            sppMessager.sendMessage(player, "Group \"" + name + "\" does not exist");
+            sppDebugger.log(strClass, strMethod, "Group \"" + name + "\" does not exist");
+            return;
+        }
+        config.set("world.groupRespawn." + name, respawnWorld);
+        plugin.saveConfig();
+        sppMessager.sendMessage(player, "Group \"" + name + "\" respawn world has been set to \"" + respawnWorld + "\"");
+        sppDebugger.log(strClass, strMethod, "Group \"" + name + "\" respawn world has been set to \"" + respawnWorld + "\"");
+    }
+
+    public static String getGroupRespawn(String name) {
+        String strMethod = "getGroupRespawn";
+        sppDebugger.log(strClass, strMethod, "Attempting to get respawn world to \"" + name + "\" for group \"" + name + "\"");
+        if (config.get("world.groupRespawn." + name) == null) {
+            return "NONE";
+        }
+        String respawnWorld = config.getString("world.groupRespawn." + name);
+        return respawnWorld;
+    }
+    */
 
     public static ArrayList<String> getWorldsInGroup(String name) {
         //sppDebugger.log("Getting group \"" + name + "\"...");

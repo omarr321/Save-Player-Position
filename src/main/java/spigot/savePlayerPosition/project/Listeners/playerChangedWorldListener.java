@@ -28,9 +28,11 @@ public class playerChangedWorldListener implements Listener {
         if (toWorldGroup != null) {
             sppDebugger.log(strClass, strMethod, event.getPlayer().getDisplayName() + " has joined group \"" + toWorldGroup + "\"");
             String currGroupWorld = playerDataManager.getGroupData(event.getPlayer().getUniqueId().toString(), toWorldGroup);
-            if (!(currGroupWorld.equals(event.getPlayer().getWorld().getName()))) {
-                sppDebugger.log(strClass, strMethod, event.getPlayer().getDisplayName() + " is being teleport to \"" + currGroupWorld + "\" in group \"" + toWorldGroup);
-                teleportPlayer(event.getPlayer(), currGroupWorld);
+            if (currGroupWorld != null) {
+                if (!(currGroupWorld.equals(event.getPlayer().getWorld().getName()))) {
+                    sppDebugger.log(strClass, strMethod, event.getPlayer().getDisplayName() + " is being teleport to \"" + currGroupWorld + "\" in group \"" + toWorldGroup);
+                    teleportPlayer(event.getPlayer(), currGroupWorld);
+                }
             }
         }
     }

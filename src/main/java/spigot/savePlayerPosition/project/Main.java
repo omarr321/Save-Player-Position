@@ -5,10 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import spigot.savePlayerPosition.project.Commands.CommandSpp;
-import spigot.savePlayerPosition.project.Listeners.joinServerListener;
-import spigot.savePlayerPosition.project.Listeners.leaveServerListener;
-import spigot.savePlayerPosition.project.Listeners.playerChangedWorldListener;
-import spigot.savePlayerPosition.project.Listeners.playerTeleportListener;
+import spigot.savePlayerPosition.project.Listeners.*;
 import spigot.savePlayerPosition.project.TabCompletions.sppTabCompletion;
 import spigot.savePlayerPosition.project.Tools.playerDataManager;
 import spigot.savePlayerPosition.project.Tools.sppDebugger;
@@ -37,6 +34,7 @@ public class Main extends JavaPlugin{
         this.getServer().getPluginManager().registerEvents(new playerTeleportListener(), this);
         this.getServer().getPluginManager().registerEvents(new joinServerListener(), this);
         this.getServer().getPluginManager().registerEvents(new playerChangedWorldListener(), this);
+        this.getServer().getPluginManager().registerEvents(new playerRespawnListener(), this);
         sppDebugger.forceLog(strClass, strMethod, this.getName() + " has been enabled", ChatColor.GREEN);
     }
 

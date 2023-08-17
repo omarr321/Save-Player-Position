@@ -213,6 +213,7 @@ public class CommandSpp implements CommandExecutor {
                             sppMessager.sendMessage(player, "NONE", ChatColor.YELLOW);
                         } else {
                             for(String group : configManager.getAllGroups()) {
+                                //sppMessager.sendMessage(player, "- ", ChatColor.RESET, group + " (Respawn World: " + configManager.getGroupRespawn(group) + ")", ChatColor.GREEN);
                                 sppMessager.sendMessage(player, "- ", ChatColor.RESET, group, ChatColor.GREEN);
                                 StringBuilder temp = new StringBuilder();
                                 for(String world : configManager.getWorldsInGroup(group)) {

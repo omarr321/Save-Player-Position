@@ -78,10 +78,13 @@ public class sppTabCompletion implements TabCompleter {
                     }
                     return list;
                 case 4:
-                    if (args[1].equalsIgnoreCase("removeWorld")) {
-                        list.addAll(configManager.getWorldsInGroup(args[2]));
-                    } else if (args[1].equalsIgnoreCase("addWorld")) {
-                        list.addAll(configManager.getAllWorldsNotInGroupOrBlacklist());
+                    switch(args[1]) {
+                        case "removeWorld":
+                            list.addAll(configManager.getWorldsInGroup(args[2]));
+                            break;
+                        case "addWorld":
+                            list.addAll(configManager.getAllWorldsNotInGroupOrBlacklist());
+                            break;
                     }
                 default:
                     return list;
