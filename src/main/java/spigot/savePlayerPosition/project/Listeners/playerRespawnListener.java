@@ -28,6 +28,7 @@ public class playerRespawnListener implements Listener {
         } else {
             sppDebugger.log(strClass, strMethod, "Deleting group data for group \"" + worldGroup + "\"");
             playerDataManager.removeGroupData(event.getPlayer().getUniqueId().toString(), worldGroup);
+            playerDataManager.removeWorldData(event.getPlayer().getUniqueId().toString(), currWorld);
         }
     }
 }
