@@ -284,6 +284,20 @@ public class CommandSpp implements CommandExecutor {
                                 sppMessager.sendMessage(player, "Error: Not a boolean!", ChatColor.RED);
                         }
                         break;
+                    case "command":
+                        switch (args[2]) {
+                            case "true":
+                                configManager.setTeleport("commandTeleport", true);
+                                sppMessager.sendMessage(player, "Teleport on command was set to true");
+                                break;
+                            case "false":
+                                configManager.setTeleport("commandTeleport", false);
+                                sppMessager.sendMessage(player, "Teleport on command was set to false");
+                                break;
+                            default:
+                                sppMessager.sendMessage(player, "Error: Not a boolean!", ChatColor.RED);
+                        }
+                        break;
                     default:
                         sppMessager.sendMessage(player, "Error: Unknown teleport type!", ChatColor.RED);
                 }

@@ -54,6 +54,7 @@ public class sppTabCompletion implements TabCompleter {
                             list.add("netherPortal");
                             list.add("endPortal");
                             list.add("endGateway");
+                            list.add("command");
                             break;
                     }
                     return list;
@@ -73,6 +74,7 @@ public class sppTabCompletion implements TabCompleter {
                         case "netherPortal":
                         case "endPortal":
                         case "endGateway":
+                        case "command":
                             list.add("true");
                             list.add("false");
                     }

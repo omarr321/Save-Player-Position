@@ -5,9 +5,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import spigot.savePlayerPosition.project.Tools.sppDebugger;
-import spigot.savePlayerPosition.project.Tools.sppMessager;
 import spigot.savePlayerPosition.project.Tools.playerDataManager;
 import spigot.savePlayerPosition.project.Tools.configManager;
+import spigot.savePlayerPosition.project.Tools.lastCommand;
 
 /**
  * @author Omar Radwan
@@ -16,6 +16,7 @@ import spigot.savePlayerPosition.project.Tools.configManager;
  */
 public class playerTeleportListener implements Listener {
     private static final String strClass = "PlayerTeleportListener";
+
     @EventHandler (priority = EventPriority.MONITOR)
     public void onPlayerTeleport(PlayerTeleportEvent event) {
         String strMethod = "onPlayerTeleport";
@@ -23,7 +24,7 @@ public class playerTeleportListener implements Listener {
         String fromWorldGroup = configManager.getGroupWorldIsPartOf(event.getFrom().getWorld().getName());
         if (!(event.getFrom().getWorld().equals(event.getTo().getWorld()))) {
             sppDebugger.log(strClass, strMethod, event.getPlayer().getDisplayName() + " switched worlds from \"" + event.getFrom().getWorld().getName() + "\" to \"" + event.getTo().getWorld().getName() + "\"");
-            playerDataManager.saveWorldData(event.getPlayer().getUniqueId().toString(), event.getFrom().getWorld().getName(), event.getFrom().getX(), event.getFrom().getY(), event.getFrom().getZ());
+            playerDataManager.saveWorldData(event.getPlayer().getUniqueId().toString(), event.getFrom().getWorld().getName(), event.getFrom().getX(), event.getFrom().getY(), event.getFrom().getZ(), event.getFrom().getYaw(), event.getFrom().getPitch());
             if (fromWorldGroup != null) {
                 if (!(fromWorldGroup.equals(toWorldGroup))) {
                     sppDebugger.log(strClass, strMethod, event.getPlayer().getDisplayName() + " left group \"" + fromWorldGroup + "\"");
@@ -42,6 +43,8 @@ public class playerTeleportListener implements Listener {
             } else if ((event.getCause() == PlayerTeleportEvent.TeleportCause.END_GATEWAY) && (configManager.getTeleport("endGateTeleport") == false)) {
                 sppDebugger.log(strClass, strMethod, event.getPlayer().getDisplayName() + " has teleported with an end gate portal, deleting world data for \"" + event.getTo().getWorld().getName() + "\"");
                 playerDataManager.removeWorldData(event.getPlayer().getUniqueId().toString(), event.getTo().getWorld().getName());
+            } else if (configManager.getTeleport("commandTeleport") == false) {
+                sppDebugger.log(strClass, strMethod, event.getPlayer().getDisplayName() + " has ran the command: " + lastCommand.getLastMessage(event.getPlayer().getUniqueId().toString()));
             }
         }
     }

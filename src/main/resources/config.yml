@@ -1,7 +1,8 @@
-debug: true
+debug: false
 world:
   blacklist: []
   group: {}
 netherPortalTeleport: false
 endPortalTeleport: false
 endGateTeleport: false
+commandTeleport: false

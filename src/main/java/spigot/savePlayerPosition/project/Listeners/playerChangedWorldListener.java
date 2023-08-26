@@ -41,11 +41,11 @@ public class playerChangedWorldListener implements Listener {
         String strMethod = "teleportPlayer";
         double[] cords = playerDataManager.getWorldData(player.getUniqueId().toString(), world);
         if (cords != null) {
-            sppDebugger.log(strClass, strMethod, player.getDisplayName() + " saved cords for \"" + world + "\": " + cords[0] + ". " + cords[1] + ", " + cords[2]);
+            sppDebugger.log(strClass, strMethod, player.getDisplayName() + " saved cords for \"" + world + "\": " + cords[0] + ". " + cords[1] + ", " + cords[2] + "; (" + cords[3] + ", " + cords[4] + ")");
             if (configManager.checkBlacklist(world)) {
                 sppDebugger.log(strClass, strMethod, "World \"" + world + "\" is blacklisted, skipping");
             } else {
-                Location loc = new Location(Bukkit.getWorld(world), cords[0], cords[1], cords[2]);
+                Location loc = new Location(Bukkit.getWorld(world), cords[0], cords[1], cords[2], (float)cords[3], (float)cords[4]);
                 player.teleport(loc);
             }
         } else {

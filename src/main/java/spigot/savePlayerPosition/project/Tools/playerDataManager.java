@@ -51,7 +51,7 @@ public class playerDataManager {
     }
 
     /**
-     * Saves the player x,y,z data for a world
+     * Saves the player x,y,z and rotation data for a world
      * @param uuid - The uuid of the player
      * @param key - The world the x,y,z data is for
      * @param xValue
@@ -59,6 +59,21 @@ public class playerDataManager {
      * @param zValue
      */
     public static void saveWorldData(String uuid, String key, double xValue, double yValue, double zValue) {
+        saveWorldData(uuid, key, xValue, yValue, zValue, 0, 180);
+    }
+
+    /**
+     * Saves the player x,y,z and rotation data for a world
+     * @param uuid - The uuid of the player
+     * @param key - The world the x,y,z data is for
+     * @param xValue
+     * @param yValue
+     * @param zValue
+     * @param xRot
+     * @param yRot
+     * @param zRot
+     */
+    public static void saveWorldData(String uuid, String key, double xValue, double yValue, double zValue, float yaw, float pitch) {
         checkPlayerWorldFile(uuid);
         String strMethod = "saveWorldData";
         try {
@@ -71,11 +86,12 @@ public class playerDataManager {
             BufferedWriter tempFile = new BufferedWriter(new FileWriter(tempUser));
             boolean found = false;
 
+            String posStr = key + ":" + xValue + "," + yValue + "," + zValue + "," + yaw + "," + pitch;
             while (line != null) {
                 String currWorld = line.split(":")[0];
                 if (currWorld.equals(key)) {
                     sppDebugger.log(strClass, strMethod, "Found data for world \"" + key + "\"");
-                    input.append(key + ":" + xValue + "," + yValue + "," + zValue).append('\n');
+                    input.append(posStr).append('\n');
                     found = true;
                 } else {
                     input.append(line).append('\n');
@@ -86,7 +102,7 @@ public class playerDataManager {
             tempFile.append(input.toString());
             if (!(found)) {
                 sppDebugger.log(strClass, strMethod, "Appending world data to end of file");
-                tempFile.append(key + ":" + xValue + "," + yValue + "," + zValue + '\n');
+                tempFile.append(posStr).append('\n');
             }
 
             file.close();
@@ -194,7 +210,14 @@ public class playerDataManager {
                 if (currWorld.equals(key)) {
                     String value = line.split(":")[1];
                     String[] cords = value.split(",");
-                    double[] tempReturn = {Double.parseDouble(cords[0]), Double.parseDouble(cords[1]), Double.parseDouble(cords[2])};
+                    double[] tempReturn;
+                    try {
+                        String _N = cords[3];
+                        tempReturn = new double[]{Double.parseDouble(cords[0]), Double.parseDouble(cords[1]), Double.parseDouble(cords[2]), Double.parseDouble(cords[3]), Double.parseDouble(cords[4])};
+                    } catch (IndexOutOfBoundsException e) {
+                        sppDebugger.log(strClass, strMethod, "Player pos value has no rotational data, return zeros for rotational");
+                        tempReturn = new double[]{Double.parseDouble(cords[0]), Double.parseDouble(cords[1]), Double.parseDouble(cords[2]), 0, 180};
+                    }
                     file.close();
                     sppDebugger.log(strClass, strMethod, "Found world data");
                     return tempReturn;

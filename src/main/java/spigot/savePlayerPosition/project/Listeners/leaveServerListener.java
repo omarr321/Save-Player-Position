@@ -21,8 +21,8 @@ public class leaveServerListener implements Listener {
         String strMethod = "onPlayerLeave";
         sppDebugger.log(strClass, strMethod, event.getPlayer().getDisplayName() + "(" + event.getPlayer().getUniqueId() + ")" + " has left the server from world " + "\"" + event.getPlayer().getWorld().getName() + "\"");
         Location tempLoc = event.getPlayer().getLocation();
-        sppDebugger.log(strClass, strMethod, event.getPlayer().getDisplayName() + " cords: " + tempLoc.getX() + ", " + tempLoc.getY() + ", " + tempLoc.getZ());
-        playerDataManager.saveWorldData(event.getPlayer().getUniqueId().toString(), event.getPlayer().getWorld().getName(), tempLoc.getX(), tempLoc.getY(), tempLoc.getZ());
+        sppDebugger.log(strClass, strMethod, event.getPlayer().getDisplayName() + " cords: " + tempLoc.getX() + ", " + tempLoc.getY() + ", " + tempLoc.getZ() + "; (" + tempLoc.getYaw() + ", " + tempLoc.getPitch() + ")");
+        playerDataManager.saveWorldData(event.getPlayer().getUniqueId().toString(), event.getPlayer().getWorld().getName(), tempLoc.getX(), tempLoc.getY(), tempLoc.getZ(), tempLoc.getYaw(), tempLoc.getPitch());
         String groupName = configManager.getGroupWorldIsPartOf(event.getPlayer().getWorld().getName());
         if (groupName != null) {
             playerDataManager.saveGroupData(event.getPlayer().getUniqueId().toString(), groupName, event.getPlayer().getWorld().getName());

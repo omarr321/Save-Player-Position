@@ -35,6 +35,7 @@ public class Main extends JavaPlugin{
         this.getServer().getPluginManager().registerEvents(new joinServerListener(), this);
         this.getServer().getPluginManager().registerEvents(new playerChangedWorldListener(), this);
         this.getServer().getPluginManager().registerEvents(new playerRespawnListener(), this);
+        this.getServer().getPluginManager().registerEvents(new chatListener(), this);
         sppDebugger.forceLog(strClass, strMethod, this.getName() + " has been enabled", ChatColor.GREEN);
     }
 

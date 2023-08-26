@@ -26,19 +26,19 @@ public class joinServerListener implements Listener {
             if (configManager.checkBlacklist(event.getPlayer().getWorld().getName())) {
                 sppDebugger.log(strClass, strMethod, "World \"" + event.getPlayer().getWorld().getName() + "\" is blacklisted, skipping");
             } else {
-                sppDebugger.log(strClass, strMethod, event.getPlayer().getDisplayName() + " cords: " + cords[0] + ". " + cords[1] + ", " + cords[2]);
+                sppDebugger.log(strClass, strMethod, event.getPlayer().getDisplayName() + " cords: " + cords[0] + ". " + cords[1] + ", " + cords[2] + "; (" + cords[3] + ", " + cords[4] + ")");
                 String group = configManager.getGroupWorldIsPartOf(event.getPlayer().getWorld().getName());
                 if (group == null) {
-                    Location loc = new Location(event.getPlayer().getWorld(), cords[0], cords[1], cords[2]);
+                    Location loc = new Location(event.getPlayer().getWorld(), cords[0], cords[1], cords[2], (float)cords[3], (float)cords[4]);
                     event.getPlayer().teleport(loc);
                 } else {
                     if (playerDataManager.getGroupData(event.getPlayer().getUniqueId().toString(), group) != null && playerDataManager.getGroupData(event.getPlayer().getUniqueId().toString(), group).equals(event.getPlayer().getWorld().getName())) {
-                        Location loc = new Location(event.getPlayer().getWorld(), cords[0], cords[1], cords[2]);
+                        Location loc = new Location(event.getPlayer().getWorld(), cords[0], cords[1], cords[2], (float)cords[3], (float)cords[4]);
                         event.getPlayer().teleport(loc);
                     } else {
                         String world = playerDataManager.getGroupData(event.getPlayer().getUniqueId().toString(), group);
                         cords = playerDataManager.getWorldData(event.getPlayer().getUniqueId().toString(), world);
-                        Location loc = new Location(Bukkit.getWorld(world), cords[0],cords[1], cords[2]);
+                        Location loc = new Location(Bukkit.getWorld(world), cords[0],cords[1], cords[2], (float)cords[3], (float)cords[4]);
                         event.getPlayer().teleport(loc);
                     }
                 }
