@@ -10,7 +10,7 @@ import spigot.savePlayerPosition.project.Tools.lastCommand;
 /**
  * @author Omar Radwan
  * @version 1.0.0
- * @about Stores the last chat message a player sent
+ * @about Stores the last chat command a player sent
  */
 public class chatListener implements Listener {
     private final String strClass = "chatListener";

@@ -13,17 +13,20 @@ You have the ability to run commands that edit the blacklist, groups, and debug.
 ### Permissions
 There is a permission system so you can give the player certain commands.
 ## List of commands, what they do, and their permission node
-| Command | Description | Permission |
-|---------|-------------|------------|
-| /spp | Shows the help | \<none\> |
-| /spp help | Shows the help | \<none\> |
-| /spp version | Shows the plugin version | spp.command.version |
-| /spp reload | Reloads the config | spp.command.reload |
-| /spp clean | Cleans up old data | spp.admin.clean |
-| /spp setdebug \<bool\> | Sets the debug value | spp.command.setdebug |
-| /spp blacklist [add/remove] \<world\> | Adds/Removes a world from the blacklist | spp.admin.blacklist |
-| /spp blacklist list | List all the blacklisted worlds | spp.admin.blacklist |
-| /spp group [create/delete] \<group\> | Creates/Deletes groups | spp.admin.group.groups |
-| /spp group [addWorld/removeWorld] \<group\> \<world\> | Adds/Removes a world from a group | spp.admin.group.worlds |
-| /spp group list | Lists all the groups and what worlds are in them | spp.admin.group.groups |
-| /spp setOnTeleport \<teleportType\> \<bool\> | Sets if the plugin should works on different type of teleports | spp.admin.onTeleport |
+| Command                                               | Description                                                    | Permission             |
+|-------------------------------------------------------|----------------------------------------------------------------|------------------------|
+| /spp                                                  | Shows the help                                                 | \<none\>               |
+| /spp help                                             | Shows the help                                                 | \<none\>               |
+| /spp version                                          | Shows the plugin version                                       | spp.command.version    |
+| /spp reload                                           | Reloads the config                                             | spp.command.reload     |
+| /spp clean                                            | Cleans up old data                                             | spp.admin.clean        |
+| /spp setdebug \<bool\>                                | Sets the debug value                                           | spp.command.setdebug   |
+| /spp blacklist [add/remove] \<world\>                 | Adds/Removes a world from the blacklist                        | spp.admin.blacklist    |
+| /spp blacklist list                                   | List all the blacklisted worlds                                | spp.admin.blacklist    |
+| /spp group [create/delete] \<group\>                  | Creates/Deletes groups                                         | spp.admin.group.groups |
+| /spp group [addWorld/removeWorld] \<group\> \<world\> | Adds/Removes a world from a group                              | spp.admin.group.worlds |
+| /spp group list                                       | Lists all the groups and what worlds are in them               | spp.admin.group.groups |
+| /spp setOnTeleport \<teleportType\> \<bool\>          | Sets if the plugin should works on different type of teleports | spp.admin.onTeleport   |
+| /spp addCommand \<command\>                           | Adds a command to the whitelist                                | spp.admin.commands     |
+| /spp removeCommand \<command\>                        | Removes a command from the whitelist                           | spp.admin.commands     |
+| /spp listCommands                                     | List all the commands in the whitelist                         | spp.admin.commands     |

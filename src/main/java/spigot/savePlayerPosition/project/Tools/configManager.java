@@ -10,6 +10,8 @@ import spigot.savePlayerPosition.project.Main;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A class that manages the world data and group data
@@ -52,13 +54,9 @@ public class configManager {
             sppMessager.sendMessage(player, "World \"" + name + "\" is already in the blacklist");
             return;
         }
-        List<String> list = (List<String>) config.getList("world.blacklist");
-        ArrayList<String> worlds = null;
-        if (list != null) {
-            worlds = new ArrayList<String>((Collection<? extends String>) config.getList("world.blacklist"));
-        }
-        worlds.add(name);
-        config.set("world.blacklist", worlds.stream().toList());
+        ArrayList<String> list = getBlacklist();
+        list.add(name);
+        config.set("world.blacklist", list.stream().toList());
         plugin.saveConfig();
         sppMessager.sendMessage(player, "World \"" + name + "\" was added to the blacklist");
     }
@@ -278,5 +276,71 @@ public class configManager {
         sppDebugger.log(strClass, strMethod, "Setting \"" + teleportKey + "\" value to \"" + value + "\"");
         config.set(teleportKey, value);
         plugin.saveConfig();
+    }
+
+    public static void addCommand(String command, Player player) {
+        if(checkCommand(command)) {
+            sppMessager.sendMessage(player, "Command \"" + command + "\" is already on the list");
+            return;
+        }
+
+        ArrayList<String> list = getCommands();
+        list.add(command);
+        config.set("commands", list.stream().toList());
+        plugin.saveConfig();
+        sppMessager.sendMessage(player, "Command \"" + command + "\" was added to the list");
+    }
+
+    public static void removeCommand(String command, Player player) {
+        if(!(checkCommand(command))) {
+            sppMessager.sendMessage(player, "Command \"" + command + "\" is not on the list");
+            return;
+        }
+
+        ArrayList<String> list = getCommands();
+        try {
+            list.remove(command);
+            config.set("commands", list.stream().toList());
+            plugin.saveConfig();
+            sppMessager.sendMessage(player,  "Command \"" + command + "\" was removed from the list");
+        } catch (Exception e) {
+            sppMessager.sendMessage(player, "Command \"" + command + "\" is not on the list");
+        }
+    }
+
+    public static boolean checkCommand(String cmd) {
+        ArrayList<String> commands = getCommands();
+
+        for (String command : commands) {
+            if (command.equals(cmd)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean checkFullCommand(String cmd) {
+        for (String command : getCommands()) {
+            Pattern pattern = Pattern.compile("^" + command + "[a-zA-Z0-9_\\s]*$");
+            Matcher matcher = pattern.matcher(cmd);
+            boolean matchFound = matcher.find();
+            if (matchFound) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static ArrayList<String> getCommands(){
+        List<String> list = (List<String>) config.getList("commands");
+        ArrayList<String> commands = null;
+        if (list != null) {
+            commands = new ArrayList<String>((Collection<? extends String>) config.getList("commands"));
+        }
+        if (commands == null) {
+            commands = new ArrayList<>();
+        }
+
+        return commands;
     }
 }

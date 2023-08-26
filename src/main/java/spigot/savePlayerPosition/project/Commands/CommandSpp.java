@@ -302,6 +302,45 @@ public class CommandSpp implements CommandExecutor {
                         sppMessager.sendMessage(player, "Error: Unknown teleport type!", ChatColor.RED);
                 }
                 break;
+            case "addCommand":
+            case "removeCommand":
+                if (!(player.hasPermission("spp.*") || player.hasPermission("spp.admin.*") || player.hasPermission("spp.admin.commands"))) {
+                    sppMessager.sendMessage(player, "You do not have permission: ", ChatColor.RED, "spp.admin.commands", ChatColor.YELLOW);
+                    return true;
+                }
+                if (args.length != 2) {
+                    sppMessager.sendMessage(player, "Error: Incorrect args amount!", ChatColor.RED);
+                    return true;
+                }
+                switch (args[0]) {
+                    case "addCommand":
+                        configManager.addCommand(args[1], player);
+                        break;
+                    case "removeCommand":
+                        configManager.removeCommand(args[1], player);
+                }
+                break;
+            case "listCommands":
+                if (!(player.hasPermission("spp.*") || player.hasPermission("spp.admin.*") || player.hasPermission("spp.admin.commands"))) {
+                    sppMessager.sendMessage(player, "You do not have permission: ", ChatColor.RED, "spp.admin.commands", ChatColor.YELLOW);
+                    return true;
+                }
+                if (args.length != 1) {
+                    sppMessager.sendMessage(player, "Error: Incorrect args amount!", ChatColor.RED);
+                    return true;
+                }
+
+
+                sppMessager.sendMessage(player, ChatColor.DARK_AQUA + "---" + ChatColor.RED + "Commands" + ChatColor.DARK_AQUA + "---");
+                if (configManager.getCommands().toString().length() == 2) {
+                    sppMessager.sendMessage(player, "NONE", ChatColor.YELLOW);
+                } else {
+                    for(String world : configManager.getCommands()) {
+                        sppMessager.sendMessage(player, "- ", ChatColor.RESET, world, ChatColor.GREEN);
+                    }
+                }
+                sppMessager.sendMessage(player, ChatColor.DARK_AQUA + "---" + ChatColor.RED + "Commands" + ChatColor.DARK_AQUA + "---");
+                break;
             default:
                 sppMessager.sendMessage(player, "Error: Unknown command!", ChatColor.RED);
         }
@@ -335,6 +374,9 @@ public class CommandSpp implements CommandExecutor {
         sppMessager.sendMessage(player, "/spp group [addWorld/removeWorld] <group> <world> ", ChatColor.GREEN, "- Adds/Removes worlds from a group", ChatColor.RESET);
         sppMessager.sendMessage(player, "/spp group list ", ChatColor.GREEN, "- Lists all the groups and what worlds are in them", ChatColor.RESET);
         sppMessager.sendMessage(player, "/spp setOnTeleport <teleportType> <bool> ",ChatColor.GREEN, "- Sets if the plugin should works on different type of teleports", ChatColor.RESET);
+        sppMessager.sendMessage(player, "/spp addCommand <command>",ChatColor.GREEN, "- Adds a command to the whitelist", ChatColor.RESET);
+        sppMessager.sendMessage(player, "/spp removeCommand <command>",ChatColor.GREEN, "- Removes a command from the whitelist", ChatColor.RESET);
+        sppMessager.sendMessage(player, "/spp listCommands",ChatColor.GREEN, "- List all the commands in the whitelist", ChatColor.RESET);
         sppMessager.sendMessage(player, ChatColor.DARK_AQUA + "---" + ChatColor.RED + "Page 1 of 1" + ChatColor.DARK_AQUA + "---");
     }
     private void clean(Player player) {

@@ -31,6 +31,9 @@ public class sppTabCompletion implements TabCompleter {
                     list.add("group");
                     list.add("clean");
                     list.add("setOnTeleport");
+                    list.add("addCommand");
+                    list.add("removeCommand");
+                    list.add("listCommands");
                     return list;
                 case 2:
                     switch(args[0]) {
@@ -55,6 +58,9 @@ public class sppTabCompletion implements TabCompleter {
                             list.add("endPortal");
                             list.add("endGateway");
                             list.add("command");
+                            break;
+                        case "removeCommand":
+                            list.addAll(configManager.getCommands());
                             break;
                     }
                     return list;

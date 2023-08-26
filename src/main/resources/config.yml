@@ -6,3 +6,4 @@ netherPortalTeleport: false
 endPortalTeleport: false
 endGateTeleport: false
 commandTeleport: false
+commands: []
