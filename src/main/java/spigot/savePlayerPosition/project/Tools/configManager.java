@@ -320,6 +320,8 @@ public class configManager {
     }
 
     public static boolean checkFullCommand(String cmd) {
+        if (cmd == null) return false;
+
         for (String command : getCommands()) {
             Pattern pattern = Pattern.compile("^" + command + "[a-zA-Z0-9_\\s]*$");
             Matcher matcher = pattern.matcher(cmd);
