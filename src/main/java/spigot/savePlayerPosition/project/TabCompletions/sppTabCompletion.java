@@ -31,9 +31,7 @@ public class sppTabCompletion implements TabCompleter {
                     list.add("group");
                     list.add("clean");
                     list.add("setOnTeleport");
-                    list.add("addCommand");
-                    list.add("removeCommand");
-                    list.add("listCommands");
+                    list.add("command");
                     return list;
                 case 2:
                     switch(args[0]) {
