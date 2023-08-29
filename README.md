@@ -27,6 +27,5 @@ There is a permission system so you can give the player certain commands.
 | /spp group [addWorld/removeWorld] \<group\> \<world\> | Adds/Removes a world from a group                              | spp.admin.group.worlds |
 | /spp group list                                       | Lists all the groups and what worlds are in them               | spp.admin.group.groups |
 | /spp setOnTeleport \<teleportType\> \<bool\>          | Sets if the plugin should works on different type of teleports | spp.admin.onTeleport   |
-| /spp addCommand \<command\>                           | Adds a command to the whitelist                                | spp.admin.commands     |
-| /spp removeCommand \<command\>                        | Removes a command from the whitelist                           | spp.admin.commands     |
-| /spp listCommands                                     | List all the commands in the whitelist                         | spp.admin.commands     |
+| /spp command [add/remove] \<command\>                 | Adds/Removes a command to the whitelist                        | spp.admin.commands     |
+| /spp command list                                     | Lists all the command in the whitelist                         | spp.admin.commands     |

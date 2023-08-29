@@ -41,6 +41,7 @@ public class sppTabCompletion implements TabCompleter {
                             list.add("true");
                             list.add("false");
                             break;
+                        case "command":
                         case "blacklist":
                             list.add("add");
                             list.add("remove");
@@ -59,18 +60,21 @@ public class sppTabCompletion implements TabCompleter {
                             list.add("endGateway");
                             list.add("command");
                             break;
-                        case "removeCommand":
-                            list.addAll(configManager.getCommands());
-                            break;
                     }
                     return list;
                 case 3:
                     switch(args[1]) {
                         case "add":
-                            list.addAll(configManager.getAllWorldsNotInGroupOrBlacklist());
+                            if (args[0].equals("blacklist")) {
+                                list.addAll(configManager.getAllWorldsNotInGroupOrBlacklist());
+                            }
                             break;
                         case "remove":
-                            list.addAll(configManager.getBlacklist());
+                            if (args[0].equals("command")) {
+                                list.addAll(configManager.getCommands());
+                            } else if (args[0].equals("blacklist")) {
+                                list.addAll(configManager.getBlacklist());
+                            }
                             break;
                         case "delete":
                         case "removeWorld":
